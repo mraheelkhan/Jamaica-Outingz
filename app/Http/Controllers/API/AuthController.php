@@ -7,19 +7,34 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use Hash;
+use Validator;
 class AuthController extends Controller
 {
     public function register(Request $request){
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+        $validatedData = $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|min:8|string',
+            'phone' => 'required|min:8|string|unique:users',
+            'country_name' => 'required|min:3|string',
         ]);
-            
+
+        if ($validator->fails()) {
+            $response_data=[
+                'success' => 0,
+                'message' => 'Validation errors',
+                'data' => $validator->errors()
+            ];
+            return response()->json($response_data);
+        }
+
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'country_id' => 0,
+            'country_name' => $request['country_name'],
+            'password' => Hash::make($request['password']),
         ]);
             
         $token = $user->createToken('auth_token')->plainTextToken;

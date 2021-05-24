@@ -40,6 +40,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
             
         return response()->json([
+            'success' => 1,
             'access_token' => $token,
             'token_type' => 'Bearer',
             'token' => 'Bearer ' . $token,
@@ -50,6 +51,7 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
+                'success' => 0,
                 'message' => 'Invalid login details'
             ], 401);
         }
@@ -59,6 +61,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'success' => 1,
             'access_token' => $token,
             'token_type' => 'Bearer',
             'token' => 'Bearer ' . $token,

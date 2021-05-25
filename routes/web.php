@@ -14,7 +14,7 @@ use App\Http\Controllers\TourController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::group(['middleware' => 'auth'], function(){

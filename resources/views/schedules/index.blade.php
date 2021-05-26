@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('page')
-    Tours & Excursion
+    Scheduled Bookings
 @endsection
 @section('content')        
 <div class="row mt-5">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="float-right">
                     <a href="{{ route('tours.create') }}" class="btn btn-block btn-outline-primary border-0">
-                        <i class="fas fa-plus fa-xs"></i> Add Tour
+                        <i class="fas fa-plus fa-xs"></i> Add Schedule Bookings
                     </a>
                 </div>
             </div>

@@ -45,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('restaurants.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Restaurants
@@ -53,7 +53,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('unique-experiences.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Unique Experiences
@@ -61,7 +61,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('bookings.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Bookings
@@ -69,7 +69,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('group-packages.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Group Packages
@@ -77,7 +77,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('merchendises.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Merchandise
@@ -85,7 +85,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('registered-guests.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Registered Guests
@@ -93,7 +93,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('tour-guides.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Tour Guides
@@ -101,7 +101,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('scheduled-bookings.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Scheduled Bookings
@@ -109,7 +109,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('promo-codes.index') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Promo Codes

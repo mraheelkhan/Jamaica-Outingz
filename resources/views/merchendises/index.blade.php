@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('page')
-    Tours & Excursion
+    Merchandises
 @endsection
 @section('content')        
 <div class="row mt-5">
@@ -10,8 +10,8 @@
                 <div class="card-title">
                 </div>
                 <div class="float-right">
-                    <a href="{{ route('tours.create') }}" class="btn btn-block btn-outline-primary border-0">
-                        <i class="fas fa-plus fa-xs"></i> Add Tour
+                    <a href="{{ route('merchendises.create') }}" class="btn btn-block btn-outline-primary border-0">
+                        <i class="fas fa-plus fa-xs"></i> Add Merchandises
                     </a>
                 </div>
             </div>
@@ -20,11 +20,13 @@
                     <table class="table table-hover">
                         <thead>
                             <th>S No</th>
-                            <th>Tour name</th>
-                            <th>Location</th>
-                            <th>Duration</th>
+                            <th>Category</th>
+                            <th>Merchandise Type</th>
                             <th>Cost</th>
-                            <th>Guide info</th>
+                            <th>Brand</th>
+                            <th>SKU</th>
+                            <th>Color</th>
+                            <th>Available Sizes</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -32,6 +34,8 @@
                             <tr>
                                 <td>{{ $loop->index }}</td>
                                 <td> {{ $record['tour_name'] }}</td>
+                                <td>{{ $record['tour_name'] }}</td>
+                                <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>

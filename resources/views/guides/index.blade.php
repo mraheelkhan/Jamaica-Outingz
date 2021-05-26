@@ -10,8 +10,8 @@
                 <div class="card-title">
                 </div>
                 <div class="float-right">
-                    <a href="{{ route('tours.create') }}" class="btn btn-block btn-outline-primary border-0">
-                        <i class="fas fa-plus fa-xs"></i> Add Tour
+                    <a href="{{ route('tour-guides.create') }}" class="btn btn-block btn-outline-primary border-0">
+                        <i class="fas fa-plus fa-xs"></i> Add Tour Guide
                     </a>
                 </div>
             </div>
@@ -20,11 +20,12 @@
                     <table class="table table-hover">
                         <thead>
                             <th>S No</th>
-                            <th>Tour name</th>
-                            <th>Location</th>
-                            <th>Duration</th>
-                            <th>Cost</th>
-                            <th>Guide info</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email Address</th>
+                            <th>Contact Number </th>
+                            <th>Pick up at Hotel Name </th>
+                            <th>Hotel room </th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -32,6 +33,8 @@
                             <tr>
                                 <td>{{ $loop->index }}</td>
                                 <td> {{ $record['tour_name'] }}</td>
+                                <td>{{ $record['tour_name'] }}</td>
+                                <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['tour_name'] }}</td>

@@ -7,7 +7,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li> --}}
       <li class="nav-item d-none d-sm-inline-block mr-auto" >
-        <h2> {{ _('Tours') }}</h2>
+        <h2> @yield('page') </h2>
       </li>
     </ul>
 

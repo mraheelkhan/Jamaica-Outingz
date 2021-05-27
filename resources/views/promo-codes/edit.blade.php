@@ -9,8 +9,9 @@
                 </h2>
             </div>
             <div class="card-body">
-               <form class="container" method="POST" action="{{ route('promo-codes.store') }}">
+               <form class="container" method="POST" action="{{ route('promo-codes.update', $promoCode->id) }}">
                 @csrf 
+                @method('PUT')
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -24,19 +25,19 @@
                        <div class="col-md-6">
                            <div class="form-group">
                                <label> Customer ID </label>
-                               <input type="text" name="customer_id" class="form-control"/>
+                               <input type="text" name="customer_id" value="{{ $promoCode->customer_id }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Guest Name </label>
-                               <input type="text" name="guest_name" class="form-control"/>
+                               <input type="text" name="guest_name"  value="{{ $promoCode->guest_name }}"  class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Promo Code </label>
-                               <input type="text" name="promo_code" class="form-control"/>
+                               <input type="text" name="promo_code"  value="{{ $promoCode->promo_code }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Discount % </label>
-                               <input type="text" name="discount" class="form-control"/>
+                               <input type="text" name="discount" value="{{ $promoCode->discount }}"  class="form-control"/>
                            </div>
                        </div>
                        <div class="col-md-6">

@@ -14,43 +14,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
+        $array = PromoCode::all();
         return view('promo-codes.index', compact('array'));
     }
 
@@ -72,7 +36,15 @@ class PromoCodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|min:4',
+            'promo_code' => 'required|min:2',
+            'discount' => 'required',
+            'guest_name' => 'required'
+        ]);
+
+        PromoCode::create($request->all());
+        return redirect()->back()->withSuccess('Promo code has successfully created.');
     }
 
     /**
@@ -94,7 +66,7 @@ class PromoCodeController extends Controller
      */
     public function edit(PromoCode $promoCode)
     {
-        //
+        return view('promo-codes.edit', compact('promoCode'));
     }
 
     /**
@@ -106,7 +78,19 @@ class PromoCodeController extends Controller
      */
     public function update(Request $request, PromoCode $promoCode)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|min:4',
+            'promo_code' => 'required|min:2',
+            'discount' => 'required',
+            'guest_name' => 'required'
+        ]);
+        $promoCode->update([
+            'customer_id' => $request->customer_id,
+            'promo_code' => $request->promo_code,
+            'discount' => $request->discount,
+            'guest_name' => $request->guest_name,
+        ]);
+        return redirect()->back()->withSuccess('Promo code has successfully updated.');
     }
 
     /**
@@ -117,6 +101,7 @@ class PromoCodeController extends Controller
      */
     public function destroy(PromoCode $promoCode)
     {
-        //
+        $promoCode->destroy();
+        return redirect()->route('promo-codes.index')->withSuccess('Promo code has been deleted.');
     }
 }

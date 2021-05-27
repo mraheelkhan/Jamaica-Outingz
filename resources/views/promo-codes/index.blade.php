@@ -30,12 +30,12 @@
                             @foreach($array as $record)
                             <tr>
                                 <td>{{ $loop->index }}</td>
-                                <td> {{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
+                                <td> {{ $record['customer_id'] }}</td>
+                                <td>{{ $record['guest_name'] }}</td>
+                                <td>{{ $record['promo_code'] }}</td>
+                                <td>{{ $record['discount'] }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('promo-codes.edit', $record->id ) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn btn-outline-danger border-0">

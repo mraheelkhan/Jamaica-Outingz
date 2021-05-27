@@ -6,7 +6,7 @@
             @include('layouts.alerts')
             <div class="card-header border-0">
                 <h2 class="card-title pl-5">
-                    Add Restaurant
+                    Edit Restaurant
                 </h2>
             </div>
             <div class="card-body">

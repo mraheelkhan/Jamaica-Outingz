@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class GroupPackage extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
 }

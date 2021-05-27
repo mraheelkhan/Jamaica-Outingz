@@ -32,20 +32,23 @@
                             @foreach($array as $record)
                             <tr>
                                 <td>{{ $loop->index }}</td>
-                                <td> {{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
+                                <td> {{ $record['first_name'] }}</td>
+                                <td>{{ $record['last_name'] }}</td>
+                                <td>{{ $record['email'] }}</td>
+                                <td>{{ $record['contact'] }}</td>
+                                <td>{{ $record['pickup_at_hotel_name'] }}</td>
+                                <td>{{ $record['hotel_room'] }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('tour-guides.edit', $record->id ) }} " class="btn btn-outline-primary float-left" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-outline-danger border-0">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                                    <form method="POST" action="{{ route('tour-guides.destroy', $record->id ) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger border-0">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

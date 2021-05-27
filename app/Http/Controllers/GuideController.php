@@ -14,43 +14,7 @@ class GuideController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
+        $array = Guide::all();
         return view('guides.index', compact('array'));
     }
 
@@ -61,6 +25,7 @@ class GuideController extends Controller
      */
     public function create()
     {
+
         return view('guides.create');
     }
 
@@ -72,7 +37,19 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|min:4',
+            'last_name' => 'required|min:2',
+            'email' => 'required',
+            'contact' => 'required',
+            'pickup_at_hotel_name' => 'required',
+            'pickup_at_hotel_address' => 'required',
+            'hotel_room' => 'required',
+            'name_of_cruiseline' => 'required',
+        ]);
+
+        Guide::create($request->all());
+        return redirect()->back()->withSuccess('Tour guide has successfully created.');
     }
 
     /**
@@ -93,8 +70,8 @@ class GuideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Guide $guide)
-    {
-        //
+    {   
+        return view('guides.edit', compact('guide'));
     }
 
     /**
@@ -106,7 +83,19 @@ class GuideController extends Controller
      */
     public function update(Request $request, Guide $guide)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|min:4',
+            'last_name' => 'required|min:2',
+            'email' => 'required',
+            'contact' => 'required',
+            'pickup_at_hotel_name' => 'required',
+            'pickup_at_hotel_address' => 'required',
+            'hotel_room' => 'required',
+            'name_of_cruiseline' => 'required',
+        ]);
+
+        $guide->update($request->all());
+        return redirect()->back()->withSuccess('Tour guide has successfully created.');
     }
 
     /**
@@ -117,6 +106,7 @@ class GuideController extends Controller
      */
     public function destroy(Guide $guide)
     {
-        //
+        $guide->delete();
+        return redirect()->route('promo-codes.index')->withSuccess('Promo code has been deleted.');
     }
 }

@@ -101,7 +101,7 @@ class PromoCodeController extends Controller
      */
     public function destroy(PromoCode $promoCode)
     {
-        $promoCode->destroy();
+        $promoCode->delete();
         return redirect()->route('promo-codes.index')->withSuccess('Promo code has been deleted.');
     }
 }

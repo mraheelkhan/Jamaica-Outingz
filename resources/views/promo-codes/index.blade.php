@@ -35,12 +35,16 @@
                                 <td>{{ $record['promo_code'] }}</td>
                                 <td>{{ $record['discount'] }}</td>
                                 <td>
-                                    <a href="{{ route('promo-codes.edit', $record->id ) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('promo-codes.edit', $record->id ) }}" class="btn btn-outline-primary float-left" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-outline-danger border-0">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                                    <form method="POST" action="{{ route('promo-codes.destroy', $record->id ) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger border-0">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

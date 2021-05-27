@@ -13,7 +13,6 @@
                <form class="container" action="{{ route('group-packages.update', $group_package->id) }}" method="post"> 
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" value="{{ $group_package->id }}">
                    <div class="row">
                        <div class="col-md-6">
                            <div class="form-group">

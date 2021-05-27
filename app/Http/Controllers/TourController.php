@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Redirect;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 
@@ -14,44 +16,9 @@ class TourController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
-        return view('tours.index', compact('array'));
+        $tours = Tour::all();
+
+        return view('tours.index', compact('tours'));
     }
 
     /**
@@ -72,7 +39,26 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'tour_name' => 'required',
+            'location' => 'required',
+            'duration' => 'required',
+            'cost' => 'required|int',
+            'guide_info' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Tour::create($request->all());
+
+            DB::commit();
+
+            return redirect::back()->with('success', 'Tour created successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect::back()->with('danger', 'Something went wrong!');
+        }
     }
 
     /**
@@ -92,9 +78,10 @@ class TourController extends Controller
      * @param  \App\Models\Tour  $tour
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tour $tour)
+    public function edit($id)
     {
-        //
+        $tour = Tour::where('id', $id)->firstOrfail();
+        return view('tours.edit', compact('tour'));
     }
 
     /**
@@ -106,7 +93,23 @@ class TourController extends Controller
      */
     public function update(Request $request, Tour $tour)
     {
-        //
+        $request->validate([
+            'tour_name' => 'required',
+            'location' => 'required',
+            'duration' => 'required',
+            'cost' => 'required|int',
+            'guide_info' => 'required',
+        ]);
+
+        $tour->update([
+            'tour_name' => $request->tour_name,
+            'location' => $request->location,
+            'duration' => $request->duration,
+            'cost' => $request->cost,
+            'guide_info' => $request->guide_info,
+        ]);
+
+        return redirect()->back()->withSuccess('Tour has been successfully updated.');
     }
 
     /**
@@ -117,6 +120,7 @@ class TourController extends Controller
      */
     public function destroy(Tour $tour)
     {
-        //
+        $tour->delete();
+        return redirect()->route('tours.index')->withSuccess('Tour has been deleted.');
     }
 }

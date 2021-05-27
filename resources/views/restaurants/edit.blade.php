@@ -13,7 +13,6 @@
                 <form class="container" method="POST" action="{{ route('restaurants.update', $restaurant->id) }}">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $restaurant->id }}"> 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

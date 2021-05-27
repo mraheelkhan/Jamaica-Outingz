@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Redirect;
 use App\Models\Guide;
 use Illuminate\Http\Request;
 
@@ -69,8 +71,9 @@ class GuideController extends Controller
      * @param  \App\Models\Guide  $guide
      * @return \Illuminate\Http\Response
      */
-    public function edit(Guide $guide)
-    {   
+    public function edit($id)
+    {
+        $guide = Guide::where('id', $id)->firstOrfail();
         return view('guides.edit', compact('guide'));
     }
 
@@ -81,8 +84,9 @@ class GuideController extends Controller
      * @param  \App\Models\Guide  $guide
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Guide $guide)
+    public function update(Request $request, $id)
     {
+        $guide = Guide::where('id', $id)->firstOrFail();
         $request->validate([
             'first_name' => 'required|min:4',
             'last_name' => 'required|min:2',
@@ -94,7 +98,16 @@ class GuideController extends Controller
             'name_of_cruiseline' => 'required',
         ]);
 
-        $guide->update($request->all());
+        Guide::where('id', $id)->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'pickup_at_hotel_name' => $request->pickup_at_hotel_name,
+            'pickup_at_hotel_address' => $request->pickup_at_hotel_address,
+            'hotel_room' => $request->hotel_room,
+            'name_of_cruiseline' => $request->name_of_cruiseline,
+        ]);
         return redirect()->back()->withSuccess('Tour guide has successfully created.');
     }
 
@@ -104,9 +117,10 @@ class GuideController extends Controller
      * @param  \App\Models\Guide  $guide
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Guide $guide)
+    public function destroy($id)
     {
-        $guide->delete();
-        return redirect()->route('promo-codes.index')->withSuccess('Promo code has been deleted.');
+        $guide = Guide::where('id', $id)->firstOrFail();
+        Guide::where('id', $id)->delete();
+        return redirect()->route('tour-guides.index')->withSuccess('Tour Guide has been deleted.');
     }
 }

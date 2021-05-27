@@ -6,41 +6,42 @@
             @include('layouts.alerts')
             <div class="card-header border-0">
                 <h2 class="card-title pl-5">
-                   Add Tour 
+                   Edit Tour 
                 </h2>
             </div>
             <div class="card-body">
-                <form class="container" action="{{ route('tours.store') }}" method="post"> 
-                @csrf  
+                <form class="container" action="{{ route('tours.update', $tour->id) }}" method="post"> 
+                @csrf
+                @method('PUT')  
                    <div class="row">
                        <div class="col-md-6">
                            <div class="form-group">
                                <label> Tour Name</label>
-                               <input type="text" name="tour_name" class="form-control"/>
+                               <input type="text" name="tour_name" value="{{ $tour->tour_name }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Location </label>
-                               <input type="text" name="location" class="form-control"/>
+                               <input type="text" name="location" value="{{ $tour->location }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Duration </label>
-                               <input type="text" name="duration" class="form-control"/>
+                               <input type="text" name="duration" value="{{ $tour->duration }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Cost </label>
-                               <input type="number" name="cost" class="form-control"/>
+                               <input type="number" name="cost" value="{{ $tour->cost }}" class="form-control"/>
                            </div>
                        </div>
                        <div class="col-md-6">
                         <div class="form-group">
                             <label> Guide info </label>
-                            <textarea name="guide_info" rows="5" class="form-control"></textarea>
+                            <textarea name="guide_info" rows="5" class="form-control">{{ $tour->guide_info }}</textarea>
                         </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">
                                <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">
-                                   Save
+                                   Update
                                </button>
                            </div>
                        </div>

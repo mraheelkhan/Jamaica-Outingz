@@ -13,7 +13,6 @@
                <form class="container" action="{{ route('unique-experiences.update', $unique_experience->id) }}" method="post"> 
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" value="{{ $unique_experience->id }}">
                     <div class="row">
                        <div class="col-md-6">
                            <div class="form-group">

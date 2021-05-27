@@ -3,6 +3,7 @@
 <div class="row mt-5">
     <div class="col-md-12">
         <div class="card">
+            @include('layouts.alerts')
             <div class="card-header border-0">
                 <h2 class="card-title pl-5">
                    Add Pickup 

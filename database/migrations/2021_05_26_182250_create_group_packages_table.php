@@ -15,6 +15,8 @@ class CreateGroupPackagesTable extends Migration
     {
         Schema::create('group_packages', function (Blueprint $table) {
             $table->id();
+            $table->string('tour_name');
+            $table->text('guide_info');
             $table->timestamps();
         });
     }

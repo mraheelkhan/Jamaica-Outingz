@@ -15,6 +15,13 @@ class CreateMerchendisesTable extends Migration
     {
         Schema::create('merchendises', function (Blueprint $table) {
             $table->id();
+            $table->string('category')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('cost')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('color')->nullable();
+            $table->string('available_size')->nullable();
             $table->timestamps();
         });
     }

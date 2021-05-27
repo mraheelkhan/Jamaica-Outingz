@@ -15,6 +15,9 @@ class CreateUniqueExperiencesTable extends Migration
     {
         Schema::create('unique_experiences', function (Blueprint $table) {
             $table->id();
+            $table->string('category')->nullable();
+            $table->string('unique_experience_name')->nullable();
+            $table->text('guide_info')->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class CreateGuestsTable extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->string('guest_name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('country');
             $table->timestamps();
         });
     }

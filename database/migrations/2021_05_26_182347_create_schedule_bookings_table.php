@@ -15,6 +15,11 @@ class CreateScheduleBookingsTable extends Migration
     {
         Schema::create('schedule_bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('tour_name');
+            $table->string('location');
+            $table->string('duration');
+            $table->integer('cost');
+            $table->text('guide_info');
             $table->timestamps();
         });
     }

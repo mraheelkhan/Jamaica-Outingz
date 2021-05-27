@@ -15,6 +15,14 @@ class CreateGuidesTable extends Migration
     {
         Schema::create('guides', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('contact');
+            $table->string('pickup_at_hotel_name');
+            $table->string('pickup_at_hotel_address');
+            $table->string('hotel_room');
+            $table->string('name_of_cruiseline');
             $table->timestamps();
         });
     }

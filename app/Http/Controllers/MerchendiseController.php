@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Redirect;
 use App\Models\Merchendise;
 use Illuminate\Http\Request;
 
@@ -14,44 +16,9 @@ class MerchendiseController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
-        return view('merchendises.index', compact('array'));
+        $merchendises = Merchendise::all();
+
+        return view('merchendises.index', compact('merchendises'));
     }
 
     /**
@@ -72,7 +39,28 @@ class MerchendiseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'category' => 'required',
+            'type' => 'required',
+            'cost' => 'required|int',
+            'brand' => 'required',
+            'sku' => 'required',
+            'color' => 'required',
+            'available_size' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Merchendise::create($request->all());
+
+            DB::commit();
+
+            return redirect::back()->with('success', 'Merchendise created successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect::back()->with('danger', 'Something went wrong!');
+        }
     }
 
     /**
@@ -92,9 +80,10 @@ class MerchendiseController extends Controller
      * @param  \App\Models\Merchendise  $merchendise
      * @return \Illuminate\Http\Response
      */
-    public function edit(Merchendise $merchendise)
+    public function edit($id)
     {
-        //
+        $merchendise = Merchendise::where('id', $id)->firstOrfail();
+        return view('merchendises.edit', compact('merchendise'));
     }
 
     /**
@@ -106,7 +95,27 @@ class MerchendiseController extends Controller
      */
     public function update(Request $request, Merchendise $merchendise)
     {
-        //
+        $request->validate([
+            'category' => 'required',
+            'type' => 'required',
+            'cost' => 'required|int',
+            'brand' => 'required',
+            'sku' => 'required',
+            'color' => 'required',
+            'available_size' => 'required',
+        ]);
+
+        $merchendise->update([
+            'category' => $request->category,
+            'type' => $request->type,
+            'cost' => $request->cost,
+            'brand' => $request->brand,
+            'sku' => $request->sku,
+            'color' => $request->color,
+            'available_size' => $request->available_size,
+        ]);
+
+        return redirect()->back()->withSuccess('Merchendise has been successfully updated.');
     }
 
     /**
@@ -117,6 +126,7 @@ class MerchendiseController extends Controller
      */
     public function destroy(Merchendise $merchendise)
     {
-        //
+        $merchendise->delete();
+        return redirect()->route('merchendises.index')->withSuccess('Merchendise has been deleted.');
     }
 }

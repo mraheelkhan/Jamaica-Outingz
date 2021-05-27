@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Redirect;
 
 class RestaurantController extends Controller
 {
@@ -14,44 +16,9 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
-        return view('restaurants.index', compact('array'));
+        $restaurants = Restaurant::all();
+
+        return view('restaurants.index', compact('restaurants'));
     }
 
     /**
@@ -72,7 +39,26 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $this->validate($request, [
+            'category' => 'required',
+            'name' => 'required',
+            'guide_info' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Restaurant::create($request->all());
+
+            DB::commit();
+
+            return redirect::back()->with('success', 'Resturant created successfully!');
+        }
+        catch(\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect::back()->with('danger', 'Something went wrong!');
+        }
+
     }
 
     /**
@@ -92,9 +78,10 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $restaurant)
+    public function edit($id)
     {
-        //
+        $restaurant = Restaurant::where('id', $id)->firstOrfail();
+        return view('restaurants.edit', compact('restaurant'));
     }
 
     /**
@@ -106,7 +93,19 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, Restaurant $restaurant)
     {
-        //
+        $request->validate([
+            'category' => 'required',
+            'name' => 'required',
+            'guide_info' => 'required',
+        ]);
+
+        $restaurant->update([
+            'category' => $request->category,
+            'name' => $request->name,
+            'guide_info' => $request->guide_info,
+        ]);
+
+        return redirect()->back()->withSuccess('Restaurant has been successfully updated.');
     }
 
     /**
@@ -117,6 +116,7 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        $restaurant->delete();
+        return redirect()->route('restaurants.index')->withSuccess('Restaurant has been deleted.');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Redirect;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
@@ -14,44 +16,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
-        return view('bookings.index', compact('array'));
+        $bookings = Booking::all();
+
+        return view('bookings.index', compact('bookings'));
     }
 
     /**
@@ -72,7 +39,29 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'contact' => 'required',
+            'hotel_name' => 'required',
+            'hotel_address' => 'required',
+            'hotel_room' => 'required',
+            'booking_date' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Booking::create($request->all());
+
+            DB::commit();
+
+            return redirect::back()->with('success', 'Booking created successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect::back()->with('danger', 'Something went wrong!');
+        }
     }
 
     /**
@@ -92,9 +81,10 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function edit($id)
     {
-        //
+        $booking = Booking::where('id', $id)->firstOrfail();
+        return view('bookings.edit', compact('booking'));
     }
 
     /**
@@ -106,7 +96,29 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'contact' => 'required',
+            'hotel_name' => 'required',
+            'hotel_address' => 'required',
+            'hotel_room' => 'required',
+            'booking_date' => 'required',
+        ]);
+
+        $booking->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'hotel_name' => $request->hotel_name,
+            'hotel_address' => $request->hotel_address,
+            'hotel_room' => $request->hotel_room,
+            'booking_date' => $request->booking_date,
+        ]);
+
+        return redirect()->back()->withSuccess('Booking has been successfully updated.');
     }
 
     /**
@@ -117,6 +129,7 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return redirect()->route('bookings.index')->withSuccess('Booking has been deleted.');
     }
 }

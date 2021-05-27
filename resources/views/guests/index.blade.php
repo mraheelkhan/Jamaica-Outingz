@@ -27,20 +27,24 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
-                            @foreach($array as $record)
+                            @foreach($guests as $record)
                             <tr>
-                                <td>{{ $loop->index }}</td>
-                                <td> {{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td> {{ $record['guest_name'] }}</td>
+                                <td>{{ $record['email'] }}</td>
+                                <td>{{ $record['phone'] }}</td>
+                                <td>{{ $record['country'] }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('registered-guests.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-outline-danger border-0">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                                    <form method="POST" action="{{ route('registered-guests.destroy', $record->id ) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger border-0">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

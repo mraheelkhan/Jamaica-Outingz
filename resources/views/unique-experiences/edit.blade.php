@@ -6,31 +6,33 @@
             @include('layouts.alerts')
             <div class="card-header border-0">
                 <h2 class="card-title pl-5">
-                   Add Restaurant
+                   Edit Unique Experience 
                 </h2>
             </div>
             <div class="card-body">
-               <form class="container" action="{{ route('restaurants.store') }}" method="post">
+               <form class="container" action="{{ route('unique-experiences.update', $unique_experience->id) }}" method="post"> 
                 @csrf
-                   <div class="row">
+                @method('PUT')
+                <input type="hidden" name="id" value="{{ $unique_experience->id }}">
+                    <div class="row">
                        <div class="col-md-6">
                            <div class="form-group">
-                               <label> Category</label>
-                               <input type="text" name="category" class="form-control"/>
+                               <label> Category </label>
+                               <input type="text" name="category" value="{{ $unique_experience->category }}" class="form-control"/>
                            </div>
                            <div class="form-group">
-                               <label> Restaurant Name </label>
-                               <input type="text" name="name" class="form-control"/>
+                               <label> Unique Experience Name </label>
+                               <input type="text" name="unique_experience_name" value="{{ $unique_experience->unique_experience_name }}" class="form-control"/>
                            </div>
-                            <div class="form-group">
-                                <label> Guide info </label>
-                                <textarea name="guide_info" rows="5" class="form-control"></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label> Guide info </label>
+                            <textarea name="guide_info" rows="5" class="form-control">{{ $unique_experience->guide_info }}</textarea>
+                        </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">
                                <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">
-                                   Save
+                                   Update
                                </button>
                            </div>
                        </div>

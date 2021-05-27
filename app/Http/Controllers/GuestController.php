@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Redirect;
 use App\Models\Guest;
 use Illuminate\Http\Request;
 
@@ -14,44 +16,9 @@ class GuestController extends Controller
      */
     public function index()
     {
-        $array = [
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-            [
-                'tour_name' => 'tour name 1', 
-                'location' => 'location 1', 
-                'duration' => 'duration 1', 
-                'cost' => '$50', 
-                'guide_info' => 'lorem ipsum ....'
-            ], 
-        ];
-        return view('guests.index', compact('array'));
+        $guests = Guest::all();
+
+        return view('guests.index', compact('guests'));
     }
 
     /**
@@ -72,7 +39,25 @@ class GuestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'guest_name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'country' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            Guest::create($request->all());
+
+            DB::commit();
+
+            return redirect::back()->with('success', 'Guest created successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect::back()->with('danger', 'Something went wrong!');
+        }
     }
 
     /**
@@ -92,9 +77,10 @@ class GuestController extends Controller
      * @param  \App\Models\Guest  $guest
      * @return \Illuminate\Http\Response
      */
-    public function edit(Guest $guest)
+    public function edit($id)
     {
-        //
+        $guest = Guest::where('id', $id)->firstOrfail();
+        return view('guests.edit', compact('guest'));
     }
 
     /**
@@ -106,7 +92,21 @@ class GuestController extends Controller
      */
     public function update(Request $request, Guest $guest)
     {
-        //
+        $request->validate([
+            'guest_name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'country' => 'required',
+        ]);
+
+        $guest->update([
+            'guest_name' => $request->guest_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'country' => $request->country,
+        ]);
+
+        return redirect()->back()->withSuccess('Guest has been successfully updated.');
     }
 
     /**
@@ -117,6 +117,7 @@ class GuestController extends Controller
      */
     public function destroy(Guest $guest)
     {
-        //
+        $guest->delete();
+        return redirect()->route('guests.index')->withSuccess('Guest has been deleted.');
     }
 }

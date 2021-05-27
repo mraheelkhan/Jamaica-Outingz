@@ -26,19 +26,23 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
-                            @foreach($array as $record)
+                            @foreach($restaurants as $record)
                             <tr>
                                 <td>{{ $loop->index }}</td>
-                                <td> {{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
+                                <td> {{ $record['category'] }}</td>
+                                <td>{{ $record['name'] }}</td>
+                                <td>{{ $record['guide_info'] }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('restaurants.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-outline-danger border-0">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                                    <form method="POST" action="{{ route('restaurants.destroy', $record->id ) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger border-0">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

@@ -6,35 +6,36 @@
             @include('layouts.alerts')
             <div class="card-header border-0">
                 <h2 class="card-title pl-5">
-                   Add Guest 
+                   Edit Guest 
                 </h2>
             </div>
             <div class="card-body">
-                <form class="container" action="{{ route('registered-guests.store') }}" method="post"> 
-                @csrf 
+                <form class="container" action="{{ route('registered-guests.update', $guest->id) }}" method="post"> 
+                @csrf
+                @method('PUT')
                    <div class="row">
                        <div class="col-md-6">
                            <div class="form-group">
                                <label> Guest Name</label>
-                               <input type="text" name="guest_name" class="form-control"/>
+                               <input type="text" name="guest_name" value="{{ $guest->guest_name }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Email Address </label>
-                               <input type="text" name="email" class="form-control"/>
+                               <input type="text" name="email" value="{{ $guest->email }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Phone Number </label>
-                               <input type="text" name="phone" class="form-control"/>
+                               <input type="text" name="phone" value="{{ $guest->phone }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Country </label>
-                               <input type="text" name="country" class="form-control"/>
+                               <input type="text" name="country" value="{{ $guest->country }}" class="form-control"/>
                            </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">
                                <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">
-                                   Save
+                                   Update
                                </button>
                            </div>
                        </div>

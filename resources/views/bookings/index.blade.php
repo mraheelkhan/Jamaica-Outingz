@@ -20,31 +20,38 @@
                     <table class="table table-hover">
                         <thead>
                             <th>S No</th>
-                            <th>Customer ID</th>
-                            <th>Guest Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email Address</th>
-                            <th>Address</th>
-                            <th>Country</th>
-                            <th>Zip Code</th>
+                            <th>Contact Number</th>
                             <th>Hotel Name</th>
+                            <th>Hotel Address</th>
+                            <th>Hotel Room</th>
+                            <th>Booking Date</th>
                         </thead>
                         <tbody>
-                            @foreach($array as $record)
+                            @foreach($bookings as $record)
                             <tr>
-                                <td>{{ $loop->index }}</td>
-                                <td> {{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
-                                <td>{{ $record['tour_name'] }}</td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td> {{ $record['first_name'] }}</td>
+                                <td>{{ $record['last_name'] }}</td>
+                                <td>{{ $record['email'] }}</td>
+                                <td>{{ $record['contact'] }}</td>
+                                <td>{{ $record['hotel_name'] }}</td>
+                                <td>{{ $record['hotel_address'] }}</td>
+                                <td>{{ $record['hotel_room'] }}</td>
+                                <td>{{ $record['booking_date'] }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
+                                    <a href="{{ route('bookings.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-outline-danger border-0">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </a>
+                                    <form method="POST" action="{{ route('bookings.destroy', $record->id ) }}">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-outline-danger border-0">
+                                            <i class="fas fa-trash fa-lg"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

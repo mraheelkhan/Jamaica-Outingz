@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use DB;
-use Redirect;
-use App\Models\Tour;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Tour;
+use App\Http\Resources\TourResourceCollection;
+use App\Http\Resources\TourResource;
+use Validator;
 class TourController extends Controller
 {
     /**
@@ -17,8 +18,7 @@ class TourController extends Controller
     public function index()
     {
         $tours = Tour::all();
-
-        return view('tours.index', compact('tours'));
+        return new TourResource($tours);
     }
 
     /**
@@ -28,7 +28,7 @@ class TourController extends Controller
      */
     public function create()
     {
-        return view('tours.create');
+        //
     }
 
     /**
@@ -39,13 +39,17 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'tour_name' => 'required',
             'location' => 'required',
             'duration' => 'required',
             'cost' => 'required|int',
             'guide_info' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return false;
+        }
 
         DB::beginTransaction();
         try {
@@ -63,10 +67,10 @@ class TourController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tour  $tour
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Tour $tour)
+    public function show($id)
     {
         //
     }
@@ -74,52 +78,34 @@ class TourController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tour  $tour
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $tour = Tour::where('id', $id)->firstOrfail();
-        return view('tours.edit', compact('tour'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tour  $tour
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tour $tour)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'tour_name' => 'required',
-            'location' => 'required',
-            'duration' => 'required',
-            'cost' => 'required|int',
-            'guide_info' => 'required',
-        ]);
-
-        $tour->update([
-            'tour_name' => $request->tour_name,
-            'location' => $request->location,
-            'duration' => $request->duration,
-            'cost' => $request->cost,
-            'guide_info' => $request->guide_info,
-        ]);
-
-        return redirect()->back()->withSuccess('Tour has been successfully updated.');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tour  $tour
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tour $tour)
+    public function destroy($id)
     {
-        $tour->delete();
-        return redirect()->route('tours.index')->withSuccess('Tour has been deleted.');
+        //
     }
 }

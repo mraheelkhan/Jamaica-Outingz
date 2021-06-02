@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\TourController;
 use App\Http\Controllers\API\GroupController;
+use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\FavouriteController;
 
 
 /*
@@ -32,3 +34,5 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/tours', TourController::class);
     Route::resource('/group-packages', GroupController::class);
 });
+Route::resource('/reviews', ReviewController::class);
+Route::resource('/favourites', FavouriteController::class);

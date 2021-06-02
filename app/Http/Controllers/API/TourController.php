@@ -18,7 +18,7 @@ class TourController extends Controller
     public function index()
     {
         $tours = Tour::all();
-        return new TourResource($tours);
+        return new TourResourceCollection($tours);
     }
 
     /**

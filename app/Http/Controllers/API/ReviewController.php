@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use DB;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\ReviewResourceCollection;
@@ -64,8 +65,9 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $review = Review::find($id);
-        return response()->json($review);
+        $review = Tour::findOrFail($id);
+        $reviews = Review::where('tour_id', $review->id)->get();
+        return response()->json($reviews);
     }
 
     /**

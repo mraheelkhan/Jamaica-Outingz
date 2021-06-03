@@ -14,9 +14,6 @@ class AddAdultsToBooking extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('adults')->nullable();
-            $table->integer('childrens')->nullable();
-            $table->integer('tour_id')->nullable();
             $table->integer('user_id')->nullable();
         });
     }

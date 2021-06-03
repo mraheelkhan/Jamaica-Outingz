@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use DB;
 use App\Http\Controllers\Controller;
 use App\Models\Favourite;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 use App\Http\Resources\FavouriteResource;
 use App\Http\Resources\FavouriteResourceCollection;
@@ -19,8 +20,9 @@ class FavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = Favourite::all();
-        return new FavouriteResourceCollection($favourites);
+        $favourites = Favourite::where('user_id', auth()->user()->id)->pluck('tour_id');
+        $tours = Tour::find($favourites);
+        return FavouriteResource::collection($tours);
     }
 
     /**

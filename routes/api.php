@@ -8,7 +8,7 @@ use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\FavouriteController;
 use App\Http\Controllers\API\BookingController;
-
+use App\Http\Resources\ProfileResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         return $request->user();
     });
     Route::get('/profile', function (Request $request) {
-        return $request->user();
+        return new ProfileResource($request->user());
     });
 
     Route::resource('/tours', TourController::class);

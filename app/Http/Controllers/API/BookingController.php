@@ -93,7 +93,28 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'id' => 'required|int',
+            'last_name' => 'required',
+            'email' => 'required',
+            'contact' => 'required',
+            'hotel_name' => 'required',
+            'hotel_address' => 'required',
+            'hotel_room' => 'required',
+            'booking_date' => 'required',
+            'adults' => 'required',
+            'childrens' => 'required',
+            'tour_id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+        $booking = $booking->update($request->all());
+        return [
+            'success' => 1,
+            'booking' => $booking
+        ];
     }
 
     /**

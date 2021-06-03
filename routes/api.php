@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         return $request->user();
     });
     Route::get('/profile', function (Request $request) {
-        return new ProfileResource($request->user());
+        return response()->json(new ProfileResource($request->user()));
     });
 
     Route::resource('/tours', TourController::class);

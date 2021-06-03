@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Favourite;
 use Illuminate\Http\Request;
 use App\Http\Resources\FavouriteResource;
+use App\Http\Resources\FavouriteResourceCollection;
 use Validator;
 
 class FavouriteController extends Controller
@@ -19,7 +20,7 @@ class FavouriteController extends Controller
     public function index()
     {
         $favourites = Favourite::all();
-        return new FavouriteResource($favourites);
+        return new FavouriteResourceCollection($favourites);
     }
 
     /**
@@ -46,16 +47,16 @@ class FavouriteController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return false;
+            return $validator->errors();
         }
 
         DB::beginTransaction();
         try {
-            Favourite::create($request->all());
+            $fav = Favourite::create($request->all());
 
             DB::commit();
 
-            return true;
+            return $fav;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -71,7 +72,7 @@ class FavouriteController extends Controller
     public function show($id)
     {
         $favourite = Favourite::find($id);
-        return $favourite;
+        return response()->json($favourite);
     }
 
     /**
@@ -94,31 +95,27 @@ class FavouriteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $favourite = Favourite::find($id);
-        if (is_null($favourite)) {
-            return 'not found';
-        }
-
+        $favourite = Favourite::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|int',
             'tour_id' => 'required|int',
-        ]);
+        ]);  
 
         if ($validator->fails()) {
-            return false;
+            return $validator->errors();
         }
 
 
         DB::beginTransaction();
         try {
-            Favourite::where('id', $id)->update([
+            $fav = Favourite::where('id', $id)->update([
                 'user_id' => $request->user_id,
                 'tour_id' => $request->tour_id,
             ]);
 
             DB::commit();
 
-            return true;
+            return $fav;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -133,10 +130,7 @@ class FavouriteController extends Controller
      */
     public function destroy($id)
     {
-        $favourite = Favourite::find($id);
-        if (is_null($favourite)) {
-            return 'not found';
-        }
+        $favourite = Favourite::findOrFail($id);
         
         DB::beginTransaction();
         try {
@@ -144,10 +138,16 @@ class FavouriteController extends Controller
 
             DB::commit();
 
-            return true;
+            return [
+                'success' => 1, 
+                'message' => 'Record has been deleted.' 
+            ];
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
+            return [
+                'success' => 0, 
+                'message' => 'Record could not deleted.' 
+            ];
         }
     }
 }

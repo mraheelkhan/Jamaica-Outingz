@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReviewResource;
+use App\Http\Resources\ReviewResourceCollection;
 use Validator;
 
 class ReviewController extends Controller
@@ -19,7 +20,7 @@ class ReviewController extends Controller
     public function index()
     {
         $reviews = Review::all();
-        return new ReviewResource($reviews);
+        return new ReviewResourceCollection($reviews);
     }
 
     /**
@@ -49,20 +50,10 @@ class ReviewController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return false;
+            return $validator->errors();
         }
         
-        DB::beginTransaction();
-        try {
-            Review::create($request->all());
-            
-            DB::commit();
-            
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            return false;
-        }
+        return Review::create($request->all());
     }
 
     /**
@@ -74,7 +65,7 @@ class ReviewController extends Controller
     public function show($id)
     {
         $review = Review::find($id);
-        return $review;
+        return response()->json($review);
     }
 
     /**
@@ -97,10 +88,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $review = Review::find($id);
-        if (is_null($review)) {
-            return 'not found';
-        }
+        $review = Review::findOrFail($id);
         
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|int',
@@ -111,13 +99,13 @@ class ReviewController extends Controller
         ]);
             
         if ($validator->fails()) {
-            return false;
+            return $validator->errors();
         }
 
 
         DB::beginTransaction();
         try {
-            Review::where('id', $id)->update([
+            $review = Review::where('id', $id)->update([
                 'user_id' => $request->user_id,
                 'tour_id' => $request->tour_id,
                 'title' => $request->title,
@@ -127,7 +115,7 @@ class ReviewController extends Controller
 
             DB::commit();
 
-            return true;
+            return $review;
         } catch (\Exception $e) {
             DB::rollback();
             return false;
@@ -142,10 +130,7 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        $review = Review::find($id);
-        if (is_null($review)) {
-            return 'not found';
-        }
+        $review = Review::findOrFail($id);
         
         DB::beginTransaction();
         try {
@@ -153,10 +138,16 @@ class ReviewController extends Controller
 
             DB::commit();
 
-            return true;
+            return [
+                'success' => 1, 
+                'message' => 'Record has been deleted.' 
+            ];
         } catch (\Exception $e) {
             DB::rollback();
-            return false;
+            return [
+                'success' => 0, 
+                'message' => 'Record could not deleted.' 
+            ];
         }
     }
 }

@@ -33,6 +33,6 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::resource('/tours', TourController::class);
     Route::resource('/group-packages', GroupController::class);
+    Route::resource('/reviews', ReviewController::class);
+    Route::resource('/favourites', FavouriteController::class);
 });
-Route::resource('/reviews', ReviewController::class);
-Route::resource('/favourites', FavouriteController::class);

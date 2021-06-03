@@ -23,6 +23,10 @@ class CreateBookingsTable extends Migration
             $table->string('hotel_address')->nullable();
             $table->string('hotel_room')->nullable();
             $table->string('booking_date')->nullable();
+            $table->integer('adults')->nullable();
+            $table->integer('childrens')->nullable();
+            $table->integer('tour_id')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\TourController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\FavouriteController;
+use App\Http\Controllers\API\BookingController;
 
 
 /*
@@ -35,4 +36,5 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/group-packages', GroupController::class);
     Route::resource('/reviews', ReviewController::class);
     Route::resource('/favourites', FavouriteController::class);
+    Route::resource('/bookings', BookingController::class);
 });

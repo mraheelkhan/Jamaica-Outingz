@@ -17,7 +17,7 @@ class AddAdultsToBooking extends Migration
             $table->integer('adults')->nullable();
             $table->integer('childrens')->nullable();
             $table->integer('tour_id')->nullable();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
         });
     }
 

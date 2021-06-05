@@ -50,12 +50,15 @@ class BookingController extends Controller
             'booking_date' => 'required',
             'adults' => 'required',
             'childrens' => 'required',
-            'tour_id' => 'required'
+            'tour_id' => 'required|int'
         ]);
         if ($validator->fails()) {
             return $validator->errors();
         }
-        $booking = Booking::create($request->all());
+        $validated = $validator->validated();
+        $validated['user_id'] = auth()->user()->id;
+        
+        $booking = Booking::create($validated);
         return [
             'success' => 1,
             'booking' => $booking

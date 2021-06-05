@@ -21,7 +21,8 @@ class FavouriteController extends Controller
     public function index()
     {
         $favourites = Favourite::where('user_id', auth()->user()->id)->pluck('tour_id');
-        $tours = Tour::find($favourites);
+        
+        $tours = Tour::whereIn('id', $favourites)->get();
         return FavouriteResource::collection($tours);
     }
 
@@ -135,11 +136,9 @@ class FavouriteController extends Controller
         $tour = Tour::findOrFail($id);
         $fav = Favourite::where('user_id', auth()->user()->id)->where('tour_id', $tour->id)->first();
 
-        // $favourite = Favourite::findOrFail($id);
-        
         DB::beginTransaction();
         try {
-            Favourite::where('id', $fav->$id)->delete();
+            Favourite::where('id', $fav->id)->delete();
 
             DB::commit();
 

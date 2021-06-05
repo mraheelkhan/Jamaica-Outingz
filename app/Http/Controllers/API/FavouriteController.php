@@ -132,11 +132,14 @@ class FavouriteController extends Controller
      */
     public function destroy($id)
     {
-        $favourite = Favourite::findOrFail($id);
+        $tour = Tour::findOrFail($id);
+        $fav = Favourite::where('user_id', auth()->user()->id)->where('tour_id', $tour->id)->first();
+
+        // $favourite = Favourite::findOrFail($id);
         
         DB::beginTransaction();
         try {
-            Favourite::where('id', $id)->delete();
+            Favourite::where('id', $fav->$id)->delete();
 
             DB::commit();
 

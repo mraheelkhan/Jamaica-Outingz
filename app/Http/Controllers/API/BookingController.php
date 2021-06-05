@@ -125,6 +125,10 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return [
+            'success' => 1, 
+            'message' => 'Booking record has been deleted.' 
+        ];
     }
 }

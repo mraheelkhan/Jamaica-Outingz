@@ -11,6 +11,7 @@ use App\Http\Controllers\ScheduleBookingController;
 use App\Http\Controllers\PromoCodeController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\GroupPackageController;
+use App\Http\Controllers\PickupController;
 
 /*
 |--------------------------------------------------------------------------

@@ -12,6 +12,8 @@ use App\Http\Controllers\PromoCodeController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\GroupPackageController;
 use App\Http\Controllers\PickupController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('/scheduled-bookings', ScheduleBookingController::class);
     Route::resource('/promo-codes', PromoCodeController::class);
     Route::resource('/group-packages', GroupPackageController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/items', ItemController::class);
 });
 
 Route::get('/dashboard', function () {

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Resources\CategoryResourceCollection;
+use App\Models\Item;
+use App\Http\Resources\ItemResourceCollection;
 
-class CategoryController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return new CategoryResourceCollection($categories);
+        $items = Item::all();
+        return new ItemResourceCollection($items);
     }
 
     /**
@@ -49,8 +49,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
-        return response()->json($category);
+        $item = Item::findOrFail($id);
+        return response()->json($item);
     }
 
     /**

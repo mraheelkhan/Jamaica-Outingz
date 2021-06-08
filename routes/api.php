@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\FavouriteController;
 use App\Http\Controllers\API\BookingController;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,4 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/favourites', FavouriteController::class);
     Route::resource('/bookings', BookingController::class);
 });
+Route::resource('/categories', CategoryController::class);

@@ -8,6 +8,7 @@ use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\FavouriteController;
 use App\Http\Controllers\API\BookingController;
+use App\Http\Controllers\API\PickupController;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\CategoryController;
 
@@ -38,5 +39,6 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/reviews', ReviewController::class);
     Route::resource('/favourites', FavouriteController::class);
     Route::resource('/bookings', BookingController::class);
+    Route::resource('/pickups', PickupController::class);
 });
 Route::resource('/categories', CategoryController::class);

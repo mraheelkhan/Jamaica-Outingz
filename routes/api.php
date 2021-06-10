@@ -12,6 +12,7 @@ use App\Http\Controllers\API\PickupController;
 use App\Http\Resources\ProfileResource;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\RestaurantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,4 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
 });
+Route::resource('/restaurants', RestaurantController::class);

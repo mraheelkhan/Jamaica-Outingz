@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Contact;
 use Auth;
 use Hash;
 use Validator;
@@ -67,4 +68,6 @@ class AuthController extends Controller
             'token' => 'Bearer ' . $token,
         ]);
     }
+
+    
 }

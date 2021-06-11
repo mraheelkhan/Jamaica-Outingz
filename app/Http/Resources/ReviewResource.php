@@ -24,6 +24,10 @@ class ReviewResource extends JsonResource
             'description' => $this->description,
             'created_at' => (string) $this->created_at,
             'updated_at' => (string) $this->updated_at,
+            'images_list' => [
+                'image_1' => 'https://www.funtoursjamaica.com/images/custom_img/slider/3.jpg',
+                'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
+            ],
         ];
     }
 }

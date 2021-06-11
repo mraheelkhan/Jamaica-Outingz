@@ -50,6 +50,7 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::findOrFail($id);
+        $restaurant['image'] = "https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg";
         return response()->json($restaurant);
     }
 

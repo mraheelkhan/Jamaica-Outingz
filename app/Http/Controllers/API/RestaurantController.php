@@ -51,6 +51,28 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $restaurant['image'] = "https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg";
+        $restaurant['reviews'] => [
+            [
+                'stars' => 3,
+                'description' => 'the restaurant is awesome',
+                'title' => 'nice restaurant',
+                'images_list' => [
+                    'image_1' => 'https://www.funtoursjamaica.com/images/custom_img/slider/3.jpg',
+                    'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
+                ],
+            ],
+            [
+                'stars' => 5,
+                'description' => 'the restaurant is awesome and nice',
+                'title' => 'great restaurant',
+                'images_list' => [
+                    'image_1' => 'https://www.funtoursjamaica.com/images/custom_img/slider/3.jpg',
+                    'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
+                ],
+            ],
+        ],
+
+
         return response()->json($restaurant);
     }
 

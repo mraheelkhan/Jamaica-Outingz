@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Item;
 use App\Http\Resources\CategoryResourceCollection;
 
 class CategoryController extends Controller
@@ -50,7 +51,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
-        return response()->json($category);
+        $items = Item::where('category_id', $category->id)->get();
+        return response()->json($items);
     }
 
     /**

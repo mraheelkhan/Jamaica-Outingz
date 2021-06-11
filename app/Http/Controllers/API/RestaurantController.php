@@ -51,7 +51,7 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::findOrFail($id);
         $restaurant['image'] = "https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg";
-        $restaurant['reviews'] => [
+        $restaurant['reviews'] = [
             [
                 'stars' => 3,
                 'description' => 'the restaurant is awesome',
@@ -70,7 +70,7 @@ class RestaurantController extends Controller
                     'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
                 ],
             ],
-        ],
+        ];
 
 
         return response()->json($restaurant);

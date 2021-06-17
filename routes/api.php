@@ -14,6 +14,8 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +49,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/items', ItemController::class);
     Route::post('/contacts', [ContactController::class, 'contact']);
 });
+Route::resource('/orders', OrderController::class);
 Route::resource('/restaurants', RestaurantController::class);
+Route::prefix('public')->group(function () {
+    Route::get('/search-tours/{text}', [SearchController::class, 'search_tours']);
+});

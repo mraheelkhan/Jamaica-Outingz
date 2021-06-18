@@ -40,7 +40,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // return json_encode($request->all());
         $validator = Validator::make($request->all(), [
             'item_id' => 'required',
             'category_id' => 'required',
@@ -62,8 +61,7 @@ class OrderController extends Controller
         }
         $validated = $validator->validated();
         
-        // $user_id = auth()->user()->id;
-        $user_id = 1;
+        $user_id = auth()->user()->id;
         DB::beginTransaction();
         try {
             $order = Order::create([

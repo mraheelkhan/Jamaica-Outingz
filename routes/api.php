@@ -55,4 +55,22 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 Route::resource('/restaurants', RestaurantController::class);
 Route::prefix('public')->group(function () {
     Route::get('/search-tours/{text}', [SearchController::class, 'search_tours']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/profile', function (Request $request) {
+        return response()->json(new ProfileResource($request->user()));
+    });
+
+    Route::resource('/tours', TourController::class);
+    Route::resource('/group-packages', GroupController::class);
+    Route::resource('/reviews', ReviewController::class);
+    Route::resource('/favourites', FavouriteController::class);
+    Route::resource('/bookings', BookingController::class);
+    Route::resource('/pickups', PickupController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/items', ItemController::class);
+    Route::post('/contacts', [ContactController::class, 'contact']);
+    
+    Route::resource('/orders', OrderController::class);
 });

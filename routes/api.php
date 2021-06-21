@@ -52,8 +52,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/orders', OrderController::class);
 });
 
-Route::resource('/restaurants', RestaurantController::class);
 Route::prefix('public')->group(function () {
+    Route::resource('/restaurants', RestaurantController::class);
     Route::get('/search-tours/{text}', [SearchController::class, 'search_tours']);
     Route::get('/user', function (Request $request) {
         return $request->user();

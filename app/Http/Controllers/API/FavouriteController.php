@@ -45,13 +45,13 @@ class FavouriteController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
             'tour_id' => 'required|int',
         ]);
 
         if ($validator->fails()) {
             return $validator->errors();
         }
+        $request->merge(['user_id' => auth()->user()->id]);
 
         DB::beginTransaction();
         try {
@@ -100,7 +100,6 @@ class FavouriteController extends Controller
     {
         $favourite = Favourite::findOrFail($id);
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|int',
             'tour_id' => 'required|int',
         ]);  
 
@@ -112,7 +111,6 @@ class FavouriteController extends Controller
         DB::beginTransaction();
         try {
             $fav = Favourite::where('id', $id)->update([
-                'user_id' => $request->user_id,
                 'tour_id' => $request->tour_id,
             ]);
 

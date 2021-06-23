@@ -51,7 +51,7 @@ class UniqueExperienceController extends Controller
 
             DB::commit();
 
-            return redirect::back()->with('success', 'Resturant created successfully!');
+            return redirect::back()->with('success', 'Unique Experience created successfully!');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);

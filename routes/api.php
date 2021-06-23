@@ -16,6 +16,7 @@ use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SearchController;
+use App\Http\Controllers\API\UniqueExperienceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,7 @@ Route::prefix('public')->group(function () {
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
     Route::post('/contacts', [ContactController::class, 'contact']);
+    Route::resource('/unique-experiences', UniqueExperienceController::class);
     
     Route::resource('/orders', OrderController::class);
 });

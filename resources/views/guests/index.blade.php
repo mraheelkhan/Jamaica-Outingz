@@ -6,6 +6,7 @@
 <div class="row mt-5">
     <div class="col-md-12">
         <div class="card">
+            @include('layouts.alerts')
             <div class="card-header border-0">
                 <div class="card-title">
                 </div>

@@ -88,7 +88,7 @@ class GuestController extends Controller
      */
     public function edit($id)
     {
-        $guest = Guest::where('id', $id)->firstOrfail();
+        $guest = User::where('id', $id)->firstOrfail();
         return view('guests.edit', compact('guest'));
     }
 
@@ -101,20 +101,33 @@ class GuestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $guest = Guest::where('id', $id)->firstOrFail();
+        $guest = User::where('id', $id)->firstOrFail();
+
         $request->validate([
             'guest_name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|unique:users,email,' . $guest->id . ',id',
+            'phone' => 'required|unique:users,phone,' . $guest->id . ',id',
             'country' => 'required',
+        ]);
+
+        if (!is_null($request->input('password'))) {
+            $this->validate($request, [
+                'password' => 'required|min:8|confirmed'
             ]);
+
+            $password = Hash::make($request->input('password'));
+        }
+        else {
+            $password = $guest->password;
+        }
             
-            Guest::where('id', $id)->update([
-            'guest_name' => $request->guest_name,
+        User::where('id', $id)->update([
+            'name' => $request->guest_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'country' => $request->country,
-            ]);
+            'country_name' => $request->country,
+            'password' => $password,
+        ]);
 
             return redirect()->back()->withSuccess('Guest has been successfully updated.');
         }
@@ -127,8 +140,8 @@ class GuestController extends Controller
          */
         public function destroy($id)
         {
-            $guest = Guest::where('id', $id)->firstOrFail();
-            Guest::where('id', $id)->delete();
+            $guest = User::where('id', $id)->firstOrFail();
+            User::where('id', $id)->delete();
             return redirect()->route('registered-guests.index')->withSuccess('Guest has been deleted.');
         }
 }

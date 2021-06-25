@@ -17,7 +17,7 @@
                        <div class="col-md-6">
                            <div class="form-group">
                                <label> Guest Name</label>
-                               <input type="text" name="guest_name" value="{{ $guest->guest_name }}" class="form-control"/>
+                               <input type="text" name="guest_name" value="{{ $guest->name }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Email Address </label>
@@ -29,9 +29,19 @@
                            </div>
                            <div class="form-group">
                                <label> Country </label>
-                               <input type="text" name="country" value="{{ $guest->country }}" class="form-control"/>
+                               <input type="text" name="country" value="{{ $guest->country_name }}" class="form-control"/>
                            </div>
                        </div>
+                       <div class="col-md-6">
+                        <div class="form-group">
+                            <label> New Password</label>
+                            <input type="password" name="password" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Confirm Password </label>
+                            <input type="password" name="password_confirmation" class="form-control"/>
+                        </div>
+                    </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">
                                <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">

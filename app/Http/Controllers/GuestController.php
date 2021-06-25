@@ -55,7 +55,6 @@ class GuestController extends Controller
             return redirect::back()->with('success', 'Guest created successfully!');
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect::back()->with('danger', 'Something went wrong!');
         }
     }

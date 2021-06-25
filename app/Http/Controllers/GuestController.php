@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use DB;
 use Redirect;
 use App\Models\Guest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Hash;
 
 class GuestController extends Controller
 {
@@ -16,7 +18,7 @@ class GuestController extends Controller
      */
     public function index()
     {
-        $guests = Guest::all();
+        $guests = User::all();
 
         return view('guests.index', compact('guests'));
     }
@@ -41,14 +43,22 @@ class GuestController extends Controller
     {
         $this->validate($request, [
             'guest_name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|unique:users',
+            'phone' => 'required|unique:users',
             'country' => 'required',
+            'password' => 'required|min:8|confirmed'
         ]);
 
         DB::beginTransaction();
         try {
-            Guest::create($request->all());
+            User::create([
+                'name' => $request->input('guest_name'),
+                'phone' => $request->input('phone'),
+                'country_id' => 1,
+                'country_name' => $request->input('country'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
 
             DB::commit();
 

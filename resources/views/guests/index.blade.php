@@ -30,10 +30,10 @@
                             @foreach($guests as $record)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td> {{ $record['guest_name'] }}</td>
+                                <td> {{ $record['name'] }}</td>
                                 <td>{{ $record['email'] }}</td>
                                 <td>{{ $record['phone'] }}</td>
-                                <td>{{ $record['country'] }}</td>
+                                <td>{{ $record['country_name'] }}</td>
                                 <td>
                                     <a href="{{ route('registered-guests.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

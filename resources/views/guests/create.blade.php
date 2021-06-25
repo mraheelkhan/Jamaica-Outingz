@@ -16,19 +16,29 @@
                        <div class="col-md-6">
                            <div class="form-group">
                                <label> Guest Name</label>
-                               <input type="text" name="guest_name" class="form-control"/>
+                               <input type="text" name="guest_name" value="{{ old('guest_name') }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Email Address </label>
-                               <input type="text" name="email" class="form-control"/>
+                               <input type="text" name="email" value="{{ old('email') }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Phone Number </label>
-                               <input type="text" name="phone" class="form-control"/>
+                               <input type="text" name="phone" value="{{ old('phone') }}" class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Country </label>
-                               <input type="text" name="country" class="form-control"/>
+                               <input type="text" name="country" value="{{ old('country') }}" class="form-control"/>
+                           </div>
+                       </div>
+                       <div class="col-md-6">
+                           <div class="form-group">
+                               <label> Password</label>
+                               <input type="password" name="password" class="form-control"/>
+                           </div>
+                           <div class="form-group">
+                               <label> Confirm Password </label>
+                               <input type="password" name="password_confirmation" class="form-control"/>
                            </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">

@@ -7,6 +7,12 @@
     </a> --}}
 
     <!-- Sidebar -->
+    @php
+    $menuitem = Route::currentRouteName();
+    $menuitem = explode('.', $menuitem);
+    $menusubitem = (empty($menuitem[1]) ? 'menusubitem' : $menuitem[1]);
+    $menuitem = $menuitem[0];
+    @endphp
     <div class="sidebar"  style="background-color: #fff; margin-top: 100px; border-radius: 10px;">
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -14,7 +20,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link @if($menuitem == 'dashboard') active @endif">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -37,7 +43,7 @@
             </ul> --}}
           </li>
           <li class="nav-item">
-            <a href="{{ route('tours.index') }}" class="nav-link active">
+            <a href="{{ route('tours.index') }}" class="nav-link @if($menuitem == 'tours') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Tours & Excursions
@@ -45,7 +51,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('restaurants.index') }}" class="nav-link">
+            <a href="{{ route('restaurants.index') }}" class="nav-link @if($menuitem == 'restaurants') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Restaurants
@@ -53,7 +59,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('unique-experiences.index') }}" class="nav-link">
+            <a href="{{ route('unique-experiences.index') }}" class="nav-link @if($menuitem == 'unique-experiences') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Unique Experiences
@@ -61,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('bookings.index') }}" class="nav-link">
+            <a href="{{ route('bookings.index') }}" class="nav-link @if($menuitem == 'bookings') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Bookings
@@ -69,7 +75,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('group-packages.index') }}" class="nav-link">
+            <a href="{{ route('group-packages.index') }}" class="nav-link @if($menuitem == 'group-packages') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Group Packages
@@ -77,7 +83,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('merchendises.index') }}" class="nav-link">
+            <a href="{{ route('merchendises.index') }}" class="nav-link @if($menuitem == 'merchendises') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Merchandise
@@ -85,7 +91,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('registered-guests.index') }}" class="nav-link">
+            <a href="{{ route('registered-guests.index') }}" class="nav-link @if($menuitem == 'registered-guests') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Registered Guests
@@ -93,7 +99,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('tour-guides.index') }}" class="nav-link">
+            <a href="{{ route('tour-guides.index') }}" class="nav-link @if($menuitem == 'tour-guides') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Tour Guides
@@ -101,7 +107,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('scheduled-bookings.index') }}" class="nav-link">
+            <a href="{{ route('scheduled-bookings.index') }}" class="nav-link @if($menuitem == 'scheduled-bookings') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Scheduled Bookings
@@ -109,7 +115,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('promo-codes.index') }}" class="nav-link">
+            <a href="{{ route('promo-codes.index') }}" class="nav-link @if($menuitem == 'promo-codes') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Promo Codes
@@ -117,7 +123,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('categories.index') }}" class="nav-link">
+            <a href="{{ route('categories.index') }}" class="nav-link @if($menuitem == 'categories') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Categories
@@ -125,7 +131,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('items.index') }}" class="nav-link">
+            <a href="{{ route('items.index') }}" class="nav-link @if($menuitem == 'items') active @endif">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p>
                 Items

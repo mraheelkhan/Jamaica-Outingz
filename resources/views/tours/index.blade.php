@@ -25,17 +25,22 @@
                             <th>Duration</th>
                             <th>Cost</th>
                             <th>Guide info</th>
+                            <th>Image</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
                             @foreach($tours as $record)
                             <tr>
-                                <td>{{ $loop->index }}</td>
+                                <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $record['tour_name'] }}</td>
                                 <td>{{ $record['location'] }}</td>
                                 <td>{{ $record['duration'] }}</td>
                                 <td>{{ $record['cost'] }}</td>
                                 <td>{{ $record['guide_info'] }}</td>
+                                <td>
+                                    <a title="Click to Download Image!" href="{{ asset('images/tours/'.$record['img']) }}" download>
+                                        <img src="{{ asset('images/tours/'.$record['img']) }}" style="width:5rem; margin: auto;"></td>
+                                    </a>
                                 <td>
                                     <a href="{{ route('tours.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

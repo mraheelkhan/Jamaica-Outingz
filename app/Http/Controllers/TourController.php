@@ -6,6 +6,7 @@ use DB;
 use Redirect;
 use App\Models\Tour;
 use Illuminate\Http\Request;
+use Image;
 
 class TourController extends Controller
 {
@@ -49,14 +50,49 @@ class TourController extends Controller
 
         DB::beginTransaction();
         try {
-            Tour::create($request->all());
+            $image_name = 'default.jpg';
+            if ($request->hasFile('img')) {
+                $img = $request->img;
+                $this->validate($request, [
+                    'img' => 'mimes:jpg,jpeg,png'
+                ]);
+
+                $image_resize = Image::make($img->getRealPath());
+                // $width = Image::make($img)->width();
+                // $height = Image::make($img)->height();
+                // $division_by = $height / 500;
+                // $new_width = $width / $division_by;
+                // $image_resize->resize($new_width, 500);
+
+                //Get Filename with Extension
+                $fileNameWithExt = $img->getClientOriginalName();
+                //Get Just File Name
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Get File Extension
+                $extension = $img->getClientOriginalExtension();
+                //FileName to Store
+                $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                //Upload Image
+                $image_resize->save(public_path('/images/tours/' . $new));
+                
+                $image_name = $new;
+            }
+
+            Tour::create([
+                'tour_name' => $request->tour_name,
+                'location' => $request->location,
+                'duration' => $request->duration,
+                'cost' => $request->cost,
+                'guide_info' => $request->guide_info,
+                'img' => $image_name,
+            ]);
 
             DB::commit();
 
             return redirect::back()->with('success', 'Tour created successfully!');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect::back()->with('danger', 'Something went wrong!');
+            return redirect::back()->with('danger', $e->getMessage());
         }
     }
 
@@ -100,12 +136,41 @@ class TourController extends Controller
             'guide_info' => 'required',
         ]);
 
+        $image_name = 'default.jpg';
+        if ($request->hasFile('img')) {
+            $img = $request->img;
+            $this->validate($request, [
+                'img' => 'mimes:jpg,jpeg,png'
+            ]);
+
+            $image_resize = Image::make($img->getRealPath());
+            // $width = Image::make($img)->width();
+            // $height = Image::make($img)->height();
+            // $division_by = $height / 500;
+            // $new_width = $width / $division_by;
+            // $image_resize->resize($new_width, 500);
+
+            //Get Filename with Extension
+            $fileNameWithExt = $img->getClientOriginalName();
+            //Get Just File Name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get File Extension
+            $extension = $img->getClientOriginalExtension();
+            //FileName to Store
+            $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+            //Upload Image
+            $image_resize->save(public_path('/images/tours/' . $new));
+            
+            $image_name = $new;
+        }
+
         $tour->update([
             'tour_name' => $request->tour_name,
             'location' => $request->location,
             'duration' => $request->duration,
             'cost' => $request->cost,
             'guide_info' => $request->guide_info,
+            'img' => $image_name,
         ]);
 
         return redirect()->back()->withSuccess('Tour has been successfully updated.');

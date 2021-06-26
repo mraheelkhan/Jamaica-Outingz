@@ -10,7 +10,7 @@
                 </h2>
             </div>
             <div class="card-body">
-                <form class="container" action="{{ route('tours.store') }}" method="post"> 
+                <form class="container" action="{{ route('tours.store') }}" method="post" enctype="multipart/form-data"> 
                 @csrf  
                    <div class="row">
                        <div class="col-md-6">
@@ -35,6 +35,10 @@
                         <div class="form-group">
                             <label> Guide info </label>
                             <textarea name="guide_info" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label> Attach Image </label>
+                            <input name="img" type="file" class="form-control">
                         </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">

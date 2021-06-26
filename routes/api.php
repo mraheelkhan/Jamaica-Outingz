@@ -12,11 +12,13 @@ use App\Http\Controllers\API\PickupController;
 use App\Http\Resources\ProfileResource;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\RestaurantController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\UniqueExperienceController;
+use App\Http\Controllers\API\RestaurantTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,9 @@ Route::prefix('public')->group(function () {
     Route::resource('/items', ItemController::class);
     Route::post('/contacts', [ContactController::class, 'contact']);
     Route::resource('/unique-experiences', UniqueExperienceController::class);
+    Route::resource('/locations', LocationController::class);
+    Route::resource('/restaurant-types', RestaurantTypeController::class);
+    Route::get('/restaurants/{location_id}/{type_id}', [RestaurantController::class, 'restaurants']);
     
     Route::resource('/orders', OrderController::class);
 });

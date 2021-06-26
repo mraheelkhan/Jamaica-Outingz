@@ -40,6 +40,8 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'location_id' => 'required',
+            'restaurant_type_id' => 'required',
             'category' => 'required',
             'name' => 'required',
             'guide_info' => 'required',
@@ -55,7 +57,6 @@ class RestaurantController extends Controller
         }
         catch(\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect::back()->with('danger', 'Something went wrong!');
         }
 
@@ -94,12 +95,16 @@ class RestaurantController extends Controller
     public function update(Request $request, Restaurant $restaurant)
     {
         $request->validate([
+            'location_id' => 'required',
+            'restaurant_type_id' => 'required',
             'category' => 'required',
             'name' => 'required',
             'guide_info' => 'required',
         ]);
 
         $restaurant->update([
+            'location_id' => $request->location_id,
+            'restaurant_type_id' => $request->restaurant_type_id,
             'category' => $request->category,
             'name' => $request->name,
             'guide_info' => $request->guide_info,

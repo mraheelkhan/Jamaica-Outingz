@@ -109,4 +109,10 @@ class RestaurantController extends Controller
     {
         //
     }
+
+    public function restaurants($location, $type)
+    {
+        $restaurants = Restaurant::where('location_id', $location)->where('restaurant_type_id', $type)->get();
+        return new RestaurantResourceCollection($restaurants);
+    }
 }

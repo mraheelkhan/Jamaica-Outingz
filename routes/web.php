@@ -14,6 +14,8 @@ use App\Http\Controllers\GroupPackageController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\RestaurantTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('/group-packages', GroupPackageController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
+    Route::resource('/locations', LocationController::class);
+    Route::resource('/restaurant-types', RestaurantTypeController::class);
 });
 
 Route::get('/dashboard', function () {

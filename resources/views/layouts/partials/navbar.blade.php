@@ -139,6 +139,22 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('locations.index') }}" class="nav-link @if($menuitem == 'locations') active @endif">
+              {{-- <i class="nav-icon fas fa-th"></i> --}}
+              <p>
+                Locations
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('restaurant-types.index') }}" class="nav-link @if($menuitem == 'restaurant-types') active @endif">
+              {{-- <i class="nav-icon fas fa-th"></i> --}}
+              <p>
+                Restaurant Types
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
               {{-- <i class="nav-icon fas fa-th"></i> --}}
               <p  style="visibility: hidden;">

@@ -16,6 +16,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label> Location ID</label>
+                                <input type="number" name="location_id" value="{{ $restaurant->location_id }}" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label> Restaurant Type ID</label>
+                                <input type="number" name="restaurant_type_id" value="{{ $restaurant->restaurant_type_id }}" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label> Category</label>
                                 <input type="text" name="category" value="{{ $restaurant->category }}" class="form-control" />
                             </div>

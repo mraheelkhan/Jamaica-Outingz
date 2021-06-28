@@ -42,7 +42,7 @@
                                 <td>
                                     <ul>
                                         @foreach($record->images as $img)
-                                            <li><a href="{{ asset('images/restaurants/'.$img->image) }}" download>Image-{{ $loop->index+1 }}</a></li>
+                                            <li><a href="{{ asset('images/restaurants/'.$img->image) }}" download>Image{{ $loop->index+1 }}</a></li>
                                         @endforeach
                                     </ul>
                                 </td>

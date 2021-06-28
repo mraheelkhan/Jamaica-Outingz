@@ -23,15 +23,29 @@
                             <th>Category</th>
                             <th>Restaurant Name</th>
                             <th>Guide Info</th>
+                            <th>Cover Image</th>
+                            <th>Images</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
                             @foreach($restaurants as $record)
                             <tr>
-                                <td>{{ $loop->index }}</td>
+                                <td>{{ $loop->index+1 }}</td>
                                 <td> {{ $record['category'] }}</td>
                                 <td>{{ $record['name'] }}</td>
                                 <td>{{ $record['guide_info'] }}</td>
+                                <td>
+                                    <a title="Click to Download Image!" href="{{ asset('images/restaurants/'.$record['img']) }}" download>
+                                        <img src="{{ asset('images/restaurants/'.$record['img']) }}" style="width:5rem; margin: auto;">
+                                    </a>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach($record->images as $img)
+                                            <li><a href="{{ asset('images/restaurants/'.$img->image) }}" download>Image {{ $loop->index+1 }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 <td>
                                     <a href="{{ route('restaurants.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

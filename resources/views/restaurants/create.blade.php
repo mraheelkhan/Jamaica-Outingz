@@ -10,7 +10,7 @@
                 </h2>
             </div>
             <div class="card-body">
-               <form class="container" action="{{ route('restaurants.store') }}" method="post">
+               <form class="container" action="{{ route('restaurants.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                    <div class="row">
                        <div class="col-md-6">
@@ -35,6 +35,16 @@
                                 <textarea name="guide_info" rows="5" class="form-control"></textarea>
                             </div>
                        </div>
+                       <div class="col-md-6">
+                            <div class="form-group">
+                                <label> Cover Image </label>
+                                <input name="img" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label> Extra 5 Images </label>
+                                <input name="images[]" type="file" multiple class="form-control">
+                            </div>
+                    </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">
                                <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">

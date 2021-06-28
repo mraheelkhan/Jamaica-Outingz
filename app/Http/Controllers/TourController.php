@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Redirect;
 use App\Models\Tour;
+use App\Models\TourImage;
 use Illuminate\Http\Request;
 use Image;
 
@@ -17,7 +18,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        $tours = Tour::all();
+        $tours = Tour::with('images')->get();
 
         return view('tours.index', compact('tours'));
     }
@@ -47,6 +48,16 @@ class TourController extends Controller
             'cost' => 'required|int',
             'guide_info' => 'required',
         ]);
+        if ($request->hasFile('images')) {
+            $images = $request->images;
+            if(count($images) > 5) {
+                return redirect::back()->with('danger', 'You cannot upload more than 5 extra images!');
+            }
+
+            $this->validate($request, [
+                'images.*' => 'mimes:jpg,jpeg,png'
+            ]);
+        }
 
         DB::beginTransaction();
         try {
@@ -78,7 +89,7 @@ class TourController extends Controller
                 $image_name = $new;
             }
 
-            Tour::create([
+            $tour = Tour::create([
                 'tour_name' => $request->tour_name,
                 'location' => $request->location,
                 'duration' => $request->duration,
@@ -86,6 +97,40 @@ class TourController extends Controller
                 'guide_info' => $request->guide_info,
                 'img' => $image_name,
             ]);
+
+            if ($request->hasFile('images')) {
+                $images = $request->images;
+    
+                foreach($images as $img) {
+                    $this->validate($request, [
+                        'img' => 'mimes:jpg,jpeg,png'
+                    ]);
+    
+                    $image_resize = Image::make($img->getRealPath());
+                    // $width = Image::make($img)->width();
+                    // $height = Image::make($img)->height();
+                    // $division_by = $height / 500;
+                    // $new_width = $width / $division_by;
+                    // $image_resize->resize($new_width, 500);
+    
+                    //Get Filename with Extension
+                    $fileNameWithExt = $img->getClientOriginalName();
+                    //Get Just File Name
+                    $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                    //Get File Extension
+                    $extension = $img->getClientOriginalExtension();
+                    //FileName to Store
+                    $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                    //Upload Image
+                    $image_resize->save(public_path('/images/tours/' . $new));
+                    
+                    $image_name = $new;
+                    TourImage::create([
+                        'tour_id' => $tour->id,
+                        'image' => $new,
+                    ]);
+                }
+            }
 
             DB::commit();
 
@@ -136,7 +181,7 @@ class TourController extends Controller
             'guide_info' => 'required',
         ]);
 
-        $image_name = 'default.jpg';
+        $image_name = $tour->img;
         if ($request->hasFile('img')) {
             $img = $request->img;
             $this->validate($request, [

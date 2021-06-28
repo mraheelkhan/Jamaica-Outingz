@@ -25,7 +25,8 @@
                             <th>Duration</th>
                             <th>Cost</th>
                             <th>Guide info</th>
-                            <th>Image</th>
+                            <th>Cover Image</th>
+                            <th>Images</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -39,8 +40,17 @@
                                 <td>{{ $record['guide_info'] }}</td>
                                 <td>
                                     <a title="Click to Download Image!" href="{{ asset('images/tours/'.$record['img']) }}" download>
-                                        <img src="{{ asset('images/tours/'.$record['img']) }}" style="width:5rem; margin: auto;"></td>
+                                        <img src="{{ asset('images/tours/'.$record['img']) }}" style="width:5rem; margin: auto;">
                                     </a>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach($record->images as $img)
+                                            <li><a href="{{ asset('images/tours/'.$img->image) }}" download>Image {{ $loop->index+1 }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                
                                 <td>
                                     <a href="{{ route('tours.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

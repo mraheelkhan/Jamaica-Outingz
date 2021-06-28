@@ -10,7 +10,7 @@
                 </h2>
             </div>
             <div class="card-body">
-                <form class="container" method="POST" action="{{ route('restaurants.update', $restaurant->id) }}">
+                <form class="container" method="POST" action="{{ route('restaurants.update', $restaurant->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -36,6 +36,17 @@
                                 <textarea name="guide_info" rows="5" class="form-control">{{ $restaurant->guide_info }}</textarea>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label> Update Image<small>(Optional)</small> </label>
+                                <input name="img" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <a title="Click to Download Image!" href="{{ asset('images/restaurants/'.$restaurant->img) }}" download>
+                                    <img src="{{ asset('images/restaurants/'.$restaurant->img) }}" style="width:70%; margin: auto;"></td>
+                                </a>
+                            </div>
+                       </div>
                         <div class="col-md-3 offset-md-4 mt-5">
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary btn-block btn-lg p-3 border-radius-3">

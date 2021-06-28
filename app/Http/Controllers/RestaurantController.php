@@ -135,7 +135,7 @@ class RestaurantController extends Controller
 
             DB::commit();
 
-            return redirect::back()->with('success', 'Resturant created successfully!');
+            return redirect::back()->with('success', 'Restaurant created successfully!');
         }
         catch(\Exception $e) {
             DB::rollback();

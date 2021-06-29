@@ -22,7 +22,7 @@ class TourResource extends JsonResource
             'cost' => $this->cost,
             'duration' => $this->duration,
             'guide_info' => $this->guide_info,
-            'tour_background_image' => $this->img,
+            'tour_background_image' => asset('images/tours/' . $this->img),
             'tour_images_list' => $this->images,
         ];
     }

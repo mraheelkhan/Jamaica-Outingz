@@ -51,9 +51,6 @@ class RestaurantController extends Controller
 
         if ($request->hasFile('images')) {
             $images = $request->images;
-            if(count($images) > 5) {
-                return redirect::back()->with('danger', 'You cannot upload more than 5 extra images!');
-            }
 
             $this->validate($request, [
                 'images.*' => 'mimes:jpg,jpeg,png'
@@ -185,6 +182,14 @@ class RestaurantController extends Controller
             'guide_info' => 'required',
         ]);
 
+        if ($request->hasFile('images')) {
+            $images = $request->images;
+
+            $this->validate($request, [
+                'images.*' => 'mimes:jpg,jpeg,png'
+            ]);
+        }
+
         $image_name = $restaurant->img;
         if ($request->hasFile('img')) {
             $img = $request->img;
@@ -222,6 +227,40 @@ class RestaurantController extends Controller
             'img' => $image_name,
         ]);
 
+        if ($request->hasFile('images')) {
+            $images = $request->images;
+
+            foreach($images as $img) {
+                $this->validate($request, [
+                    'img' => 'mimes:jpg,jpeg,png'
+                ]);
+
+                $image_resize = Image::make($img->getRealPath());
+                // $width = Image::make($img)->width();
+                // $height = Image::make($img)->height();
+                // $division_by = $height / 500;
+                // $new_width = $width / $division_by;
+                // $image_resize->resize($new_width, 500);
+
+                //Get Filename with Extension
+                $fileNameWithExt = $img->getClientOriginalName();
+                //Get Just File Name
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Get File Extension
+                $extension = $img->getClientOriginalExtension();
+                //FileName to Store
+                $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                //Upload Image
+                $image_resize->save(public_path('/images/restaurants/' . $new));
+                
+                $image_name = $new;
+                RestaurantImage::create([
+                    'restaurant_id' => $restaurant->id,
+                    'image' => $new,
+                ]);
+            }
+        }
+
         return redirect()->back()->withSuccess('Restaurant has been successfully updated.');
     }
 
@@ -235,5 +274,12 @@ class RestaurantController extends Controller
     {
         $restaurant->delete();
         return redirect()->route('restaurants.index')->withSuccess('Restaurant has been deleted.');
+    }
+
+    public function delete_image($id) {
+        $image = RestaurantImage::findOrFail($id)->delete();
+        return redirect::back()->with('success', 'Image Deleted successfully!');
+        // File::delete(public_path("images/filename.png"));
+
     }
 }

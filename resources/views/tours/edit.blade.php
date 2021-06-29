@@ -38,14 +38,36 @@
                                 <textarea name="guide_info" rows="5" class="form-control">{{ $tour->guide_info }}</textarea>
                             </div>
                             <div class="form-group">
-                                <label> Update Image<small>(Optional)</small> </label>
+                                <label> Update Cover Image<small>(Optional)</small> </label>
                                 <input name="img" type="file" class="form-control">
                             </div>
                             <div class="form-group">
                                 <a title="Click to Download Image!" href="{{ asset('images/tours/'.$tour->img) }}" download>
-                                    <img src="{{ asset('images/tours/'.$tour->img) }}" style="width:70%; margin: auto;"></td>
+                                    <img src="{{ asset('images/tours/'.$tour->img) }}" class="image_width">
                                 </a>
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Extra Images</label>
+                                <div class="row">
+                                    @foreach ($tour->images as $img)
+                                    <div class="col-md-2 text-center">
+                                        <a title="Delete this Image" href="{{ route('tour_image.delete', $img->id) }}"><i class="fa fa-trash"></i></a><br>
+                                        <img src="{{ asset('images/tours/'.$img->image) }}" class="mt-1 extra_images">
+                                    </div>
+                                   @endforeach
+                               </div>
+                           </div>
+                       </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Upload Extra Images</label>
+                                <div class="form-group">
+                                    <label> Extra 5 Images </label>
+                                    <input name="images[]" type="file" multiple class="form-control">
+                                </div>
+                           </div>
                        </div>
                        <div class="col-md-3 offset-md-4 mt-5">
                            <div class="form-group text-center">

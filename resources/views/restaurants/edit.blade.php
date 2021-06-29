@@ -43,9 +43,27 @@
                             </div>
                             <div class="form-group">
                                 <a title="Click to Download Image!" href="{{ asset('images/restaurants/'.$restaurant->img) }}" download>
-                                    <img src="{{ asset('images/restaurants/'.$restaurant->img) }}" style="width:70%; margin: auto;"></td>
+                                    <img src="{{ asset('images/restaurants/'.$restaurant->img) }}" class="mt-1 image_width">
                                 </a>
                             </div>
+                            <div class="form-group">
+                                <label>Extra Images</label>
+                                <div class="row">
+                                    @foreach ($restaurant->images as $img)
+                                    <div class="col-md-2 text-center">
+                                        <a title="Delete this Image" href="{{ route('restaurant_image.delete', $img->id) }}"><i class="fa fa-trash"></i></a><br>
+                                        <img src="{{ asset('images/restaurants/'.$img->image) }}" class="mt-1 extra_images">
+                                    </div>
+                                   @endforeach
+                               </div>
+                           </div>
+                           <div class="form-group">
+                                <label>Upload Extra Images</label>
+                                <div class="form-group">
+                                    <label> Extra 5 Images </label>
+                                    <input name="images[]" type="file" multiple class="form-control">
+                                </div>
+                        </div>
                        </div>
                         <div class="col-md-3 offset-md-4 mt-5">
                             <div class="form-group text-center">

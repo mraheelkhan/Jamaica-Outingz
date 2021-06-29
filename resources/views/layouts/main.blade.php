@@ -11,6 +11,12 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
+  @if(in_array(Route::currentRouteName(), ['tours.edit']))
+  <link rel="stylesheet" href="{{ asset('css/tours.css') }}">
+    @endif
+  @if(in_array(Route::currentRouteName(), ['restaurants.edit']))
+  <link rel="stylesheet" href="{{ asset('css/restaurants.css') }}">
+    @endif
 
 </head>
 <body class="hold-transition sidebar-mini" style="background-color: #f4f6f9;">

@@ -12,7 +12,7 @@ class Tour extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     public function images() {
-        return $this->hasMany('App\Models\TourImage', 'tour_id');
+        return $this->hasMany('App\Models\TourImage', 'tour_id')->select('image');
     }
 
 }

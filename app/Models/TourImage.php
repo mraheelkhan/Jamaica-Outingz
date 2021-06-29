@@ -14,6 +14,6 @@ class TourImage extends Model
     ];
 
     public function getImageNameAttribute(){
-        return $this->asset('images/tours/' . $this->image);
+        return asset('images/tours/' . $this->image);
     }
 }

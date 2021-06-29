@@ -9,4 +9,11 @@ class TourImage extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $appends = [
+        'image_name'
+    ];
+
+    public function getImageNameAttribute(){
+        return $this->asset('images/tours/' . $this->image);
+    }
 }

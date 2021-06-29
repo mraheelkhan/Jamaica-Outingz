@@ -14,4 +14,5 @@ class Tour extends Model
     public function images() {
         return $this->hasMany('App\Models\TourImage', 'tour_id');
     }
+
 }

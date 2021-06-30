@@ -17,6 +17,9 @@
   @if(in_array(Route::currentRouteName(), ['restaurants.edit']))
   <link rel="stylesheet" href="{{ asset('css/restaurants.css') }}">
     @endif
+  @if(in_array(Route::currentRouteName(), ['unique-experiences.edit']))
+  <link rel="stylesheet" href="{{ asset('css/unique-experiences.css') }}">
+    @endif
 
 </head>
 <body class="hold-transition sidebar-mini" style="background-color: #f4f6f9;">

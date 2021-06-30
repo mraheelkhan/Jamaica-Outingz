@@ -17,7 +17,7 @@ class UniqueExperienceController extends Controller
      */
     public function index()
     {
-        $unique_experiences = UniqueExperience::all();
+        $unique_experiences = UniqueExperience::with('images')->get();
         return new UniqueExperienceResourceCollection($unique_experiences);
     }
 

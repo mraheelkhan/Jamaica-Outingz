@@ -20,18 +20,27 @@
                     <table class="table table-hover">
                         <thead>
                             <th>S No</th>
-                            <th>Category</th>
-                            <th>Unique Experience</th>
-                            <th>Guide info</th>
+                            <th>Title</th>
+                            <th>Location</th>
+                            <th>Duration</th>
+                            <th>Cost</th>
+                            <th>Guide Info</th>
+                            <th>Stars</th>
+                            <th>No of Reviews</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
                             @foreach($unique_experiences as $record)
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
-                                <td> {{ $record['category'] }}</td>
-                                <td> {{ $record['unique_experience_name'] }}</td>
+                                <td> {{ $record['title'] }}</td>
+                                <td> {{ $record['location'] }}</td>
+                                <td> {{ $record['duration'] }}</td>
+                                <td> {{ $record['cost'] }}</td>
                                 <td>{{ $record['guide_info'] }}</td>
+                                <td> {{ $record['stars'] }}</td>
+                                <td> {{ $record['location'] }}</td>
+                                <td>{{ $record['no_of_reviews'] }}</td>
                                 <td>
                                     <a href="{{ route('unique-experiences.edit', $record->id) }}" class="btn btn-outline-primary" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

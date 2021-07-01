@@ -52,7 +52,7 @@
                                     @foreach ($restaurant->images as $img)
                                     <div class="col-md-2 text-center">
                                         <a title="Delete this Image" href="{{ route('restaurant_image.delete', $img->id) }}"><i class="fa fa-trash"></i></a><br>
-                                        <img src="{{ asset('images/restaurants/'.$img->image) }}" class="mt-1 extra_images">
+                                        <img src="{{ asset('images/restaurants/'.$img->image) }}" class="mt-1 extra_images" style="width:90%; margin: auto;">
                                     </div>
                                    @endforeach
                                </div>

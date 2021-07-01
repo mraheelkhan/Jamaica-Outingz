@@ -18,7 +18,7 @@ class GuestController extends Controller
      */
     public function index()
     {
-        $guests = User::all();
+        $guests = User::where('email', '!=', 'ihtisham467@gmail.com')->get();
 
         return view('guests.index', compact('guests'));
     }

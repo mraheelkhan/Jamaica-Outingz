@@ -29,7 +29,11 @@
                            </div>
                            <div class="form-group">
                                <label> Category Image </label>
-                               <input type="file" name="image" class="form-control"/>
+                               <input type="file" name="img" class="form-control"/>
+                           </div>
+                           <div class="form-group">
+                               <label> Category Description </label>
+                               <input type="text" name="description" class="form-control"/>
                            </div>
                        </div>
                        <div class="col-md-6">

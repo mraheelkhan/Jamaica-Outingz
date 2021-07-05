@@ -21,7 +21,8 @@
                         <thead>
                             <th>S No</th>
                             <th>Name</th>
-                            <th>image</th>
+                            <th>Image</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -29,7 +30,8 @@
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
                                 <td> {{ $record['name'] }}</td>
-                                <td>{{ $record['image'] }}</td>
+                                <td><img src="{{ asset('images/categories/'.$record['image']) }}" style="width: 4rem; margin: auto;"></td>
+                                <td>{{ $record['description'] }}</td>
                                 <td>
                                     <a href="{{ route('categories.edit', $record->id ) }}" class="btn btn-outline-primary float-left" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

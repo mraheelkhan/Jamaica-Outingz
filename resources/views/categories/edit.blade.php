@@ -32,6 +32,10 @@
                                <label> Category Image </label>
                                <input type="file" name="image"  class="form-control"/>
                            </div>
+                           <div class="form-group">
+                               <label> Category Description </label>
+                               <input type="text" name="description" value="{{ $category->description }}"  class="form-control"/>
+                           </div>
                        </div>
                        <div class="col-md-6">
                        </div>

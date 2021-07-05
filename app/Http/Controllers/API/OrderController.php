@@ -101,7 +101,7 @@ class OrderController extends Controller
         }
         catch(\Exception $e) {
             DB::rollback();
-            return $e;
+            return json_encode($e->getMessage());
             return [
                 'success' => 0,
                 'order' => null

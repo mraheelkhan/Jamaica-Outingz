@@ -18,8 +18,8 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'short_description' => "Short Description for category here",
-            'image' => 'https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg' 
+            'short_description' => $this->description,
+            'image' => asset('images/categories/' . $this->img) 
         ];
     }
 }

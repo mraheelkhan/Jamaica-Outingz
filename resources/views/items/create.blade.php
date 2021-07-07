@@ -19,6 +19,10 @@
                                <input type="number" name="category_id" class="form-control"/>
                            </div>
                            <div class="form-group">
+                               <label> SKU </label>
+                               <input type="text" name="sku" class="form-control"/>
+                           </div>
+                           <div class="form-group">
                                <label> Title </label>
                                <input type="text" name="title" class="form-control"/>
                            </div>
@@ -30,10 +34,28 @@
                                <label> Description </label>
                                <textarea class="form-control" rows="4" name="description"></textarea>
                            </div>
+                       </div>
+                       <div class="col-md-6">
+                        <div class="form-group">
+                            <label> Item Image </label>
+                            <input type="file" name="img" class="form-control"/>
+                        </div>
                            <div class="form-group">
-                               <label> Category Image </label>
-                               <input type="file" name="image" class="form-control"/>
+                               <label> Sizes <small>(Put sizes with comma seperation)</small> </label>
+                               <input type="text" name="sizes" placeholder="e.g: small,medium,large" class="form-control"/>
                            </div>
+                           <div class="form-group">
+                            <label> Materials <small>(Put materials with comma seperation)</small> </label>
+                            <input type="text" name="materials" placeholder="e.g: cotton,silk" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Colors <small>(Put colors with comma seperation)</small> </label>
+                            <input type="text" name="colors" placeholder="e.g: red,yellow,green" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Fittings <small>(Put fittings with comma seperation)</small> </label>
+                            <input type="text" name="fittings" placeholder="e.g: true to size, fit to size" class="form-control"/>
+                        </div>
                        </div>
                        <div class="col-md-6">
                        </div>

@@ -21,8 +21,13 @@
                         <thead>
                             <th>S No</th>
                             <th>Category</th>
+                            <th>SKU</th>
                             <th>Title</th>
                             <th>Price</th>
+                            <th>Sizes</th>
+                            <th>Colors</th>
+                            <th>Materials</th>
+                            <th>Fittings</th>
                             <th>Description</th>
                             <th>Image</th>
                             <th>Action</th>
@@ -32,10 +37,15 @@
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
                                 <td> {{ $record['category_id'] }}</td>
+                                <td> {{ $record['sku'] }}</td>
                                 <td> {{ $record['title'] }}</td>
                                 <td> {{ $record['price'] }}</td>
+                                <td> {{ $record['sizes'] }}</td>
+                                <td> {{ $record['colors'] }}</td>
+                                <td> {{ $record['materials'] }}</td>
+                                <td> {{ $record['fittings'] }}</td>
                                 <td> {{ $record['description'] }}</td>
-                                <td>{{ $record['image'] }}</td>
+                                <td> <img src="{{ asset('images/items/'.$record['image']) }}" style="width: 80%;"></td>
                                 <td>
                                     <a href="{{ route('items.edit', $record->id ) }}" class="btn btn-outline-primary float-left" style="border: darkgreen 1px solid">
                                         <i class="fas fa-edit"></i>

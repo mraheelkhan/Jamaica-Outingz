@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Image;
 
 class ItemController extends Controller
 {
@@ -38,18 +39,50 @@ class ItemController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
+            'sku' => 'required',
             'title' => 'required|min:2',
             'price' => 'required|int',
             'description' => 'nullable',
-            'image' => 'nullable'
+            'sizes' => 'required',
+            'materials' => 'required',
+            'colors' => 'required',
+            'fittings' => 'required',
         ]);
+
+        $image_name = 'default.jpg';
+        if ($request->hasFile('img')) {
+            $img = $request->img;
+            $this->validate($request, [
+                'img' => 'mimes:jpg,jpeg,png'
+            ]);
+
+            $image_resize = Image::make($img->getRealPath());
+
+            //Get Filename with Extension
+            $fileNameWithExt = $img->getClientOriginalName();
+            //Get Just File Name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get File Extension
+            $extension = $img->getClientOriginalExtension();
+            //FileName to Store
+            $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+            //Upload Image
+            $image_resize->save(public_path('/images/items/' . $new));
+            
+            $image_name = $new;
+        }
 
         Item::create([
             'category_id' => $request->category_id,
+            'sku' => $request->sku,
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description,
-            'image' => 'https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg',
+            'sizes' => $request->sizes,
+            'materials' => $request->materials,
+            'colors' => $request->colors,
+            'fittings' => $request->fittings,
+            'image' => $image_name,
         ]);
         return redirect()->back()->withSuccess('Item has successfully created.');
     }
@@ -90,14 +123,42 @@ class ItemController extends Controller
             'title' => 'required|min:2',
             'price' => 'required|int',
             'description' => 'nullable',
-            'image' => 'nullable'
         ]);
+
+        $image_name = $item->img;
+        if ($request->hasFile('img')) {
+            $img = $request->img;
+            $this->validate($request, [
+                'img' => 'mimes:jpg,jpeg,png'
+            ]);
+
+            $image_resize = Image::make($img->getRealPath());
+
+            //Get Filename with Extension
+            $fileNameWithExt = $img->getClientOriginalName();
+            //Get Just File Name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get File Extension
+            $extension = $img->getClientOriginalExtension();
+            //FileName to Store
+            $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+            //Upload Image
+            $image_resize->save(public_path('/images/items/' . $new));
+            
+            $image_name = $new;
+        }
+
         $item->update([
             'category_id' => $request->category_id,
+            'sku' => $request->sku,
             'title' => $request->title,
             'price' => $request->price,
             'description' => $request->description,
-            'image' => 'https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg',
+            'sizes' => $request->sizes,
+            'materials' => $request->materials,
+            'colors' => $request->colors,
+            'fittings' => $request->fittings,
+            'image' => $image_name,
         ]);
         return redirect()->back()->withSuccess('Item has successfully updated.');
     }

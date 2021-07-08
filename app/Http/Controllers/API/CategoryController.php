@@ -52,7 +52,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $items = Item::where('category_id', $category->id)->get();
-        return response()->json($items);
+        return new ItemResourceCollection($items);
     }
 
     /**

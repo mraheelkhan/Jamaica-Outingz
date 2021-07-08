@@ -17,10 +17,12 @@ class RestaurantResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
+            'type' => $this->type,
             'category' => $this->category,
             'restaurant_name' => $this->name,
             'guide_info' => $this->guide_info,
-            'image' => 'https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg',
+            'image' => asset('images/restaurants/' . $this->img),
+            'images_list' => $this->images,
             'reviews' => [
                 [
                     'stars' => 3,

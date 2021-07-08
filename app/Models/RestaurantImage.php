@@ -10,7 +10,11 @@ class RestaurantImage extends Model
     use HasFactory;
     protected $guarded = ['id'];
     
-    public function images() {
-        return $this->hasMany('App\Models\TourImage', 'tour_id');
+    protected $appends = [
+        'image_name'
+    ];
+
+    public function getImageNameAttribute(){
+        return asset('images/restaurants/' . $this->image);
     }
 }

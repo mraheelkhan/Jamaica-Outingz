@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Http\Resources\RestaurantResourceCollection;
+use App\Http\Resources\RestaurantResource;
 
 class RestaurantController extends Controller
 {
@@ -50,30 +51,8 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::findOrFail($id);
-        $restaurant['image'] = "https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg";
-        $restaurant['reviews'] = [
-            [
-                'stars' => 3,
-                'description' => 'the restaurant is awesome',
-                'title' => 'nice restaurant',
-                'images_list' => [
-                    'image_1' => 'https://www.funtoursjamaica.com/images/custom_img/slider/3.jpg',
-                    'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
-                ],
-            ],
-            [
-                'stars' => 5,
-                'description' => 'the restaurant is awesome and nice',
-                'title' => 'great restaurant',
-                'images_list' => [
-                    'image_1' => 'https://www.funtoursjamaica.com/images/custom_img/slider/3.jpg',
-                    'image_2' => 'https://www.funtoursjamaica.com/images/custom_img/slider/4.jpg',
-                ],
-            ],
-        ];
+        return new RestaurantResource($restaurant);
 
-
-        return response()->json($restaurant);
     }
 
     /**

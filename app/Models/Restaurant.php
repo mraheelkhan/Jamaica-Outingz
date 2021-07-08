@@ -14,4 +14,8 @@ class Restaurant extends Model
     public function images() {
         return $this->hasMany('App\Models\RestaurantImage', 'restaurant_id');
     }
+
+    public function type() {
+        return $this->belongsTo('App\Models\RestaurantType', 'restaurant_type_id');
+    }
 }

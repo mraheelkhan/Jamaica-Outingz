@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class ItemImage extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
-    protected $hidden = ['created_at', 'updated_at'];
 
-    public function images() {
-        return $this->hasMany('App\Models\ItemImage', 'item_id');
+    protected $guarded = ['id'];
+    
+    protected $appends = [
+        'image_name'
+    ];
+
+    public function getImageNameAttribute(){
+        return asset('images/items/' . $this->image);
     }
 }

@@ -59,7 +59,6 @@
                            </div>
                            <div class="form-group">
                                 <label>Upload Extra Images</label>
-                                <div class="form-group">
                                     <label> Extra 5 Images </label>
                                     <input name="images[]" type="file" multiple class="form-control">
                                 </div>

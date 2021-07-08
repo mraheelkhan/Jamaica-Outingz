@@ -36,16 +36,12 @@
                            </div>
                        </div>
                        <div class="col-md-6">
-                        <div class="form-group">
-                            <label> Item Image </label>
-                            <input type="file" name="img" class="form-control"/>
-                        </div>
                            <div class="form-group">
                                <label> Sizes <small>(Put sizes with comma seperation)</small> </label>
                                <input type="text" name="sizes" placeholder="e.g: small,medium,large" class="form-control"/>
-                           </div>
-                           <div class="form-group">
-                            <label> Materials <small>(Put materials with comma seperation)</small> </label>
+                            </div>
+                            <div class="form-group">
+                                <label> Materials <small>(Put materials with comma seperation)</small> </label>
                             <input type="text" name="materials" placeholder="e.g: cotton,silk" class="form-control"/>
                         </div>
                         <div class="form-group">
@@ -55,6 +51,14 @@
                         <div class="form-group">
                             <label> Fittings <small>(Put fittings with comma seperation)</small> </label>
                             <input type="text" name="fittings" placeholder="e.g: true to size, fit to size" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Item Image </label>
+                            <input type="file" name="img" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label> Extra 5 Images </label>
+                            <input name="images[]" type="file" multiple class="form-control">
                         </div>
                        </div>
                        <div class="col-md-6">

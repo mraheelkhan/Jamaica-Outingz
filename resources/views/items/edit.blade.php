@@ -71,6 +71,22 @@
                                 <img src="{{ asset('images/items/'.$item->image) }}" class="image_width">
                             </a>
                         </div>
+                        <div class="form-group">
+                            <label>Extra Images</label>
+                            <div class="row">
+                                @foreach ($item->images as $img)
+                                <div class="col-md-2 text-center">
+                                    <a title="Delete this Image" href="{{ route('item_image.delete', $img->id) }}"><i class="fa fa-trash"></i></a><br>
+                                    <img src="{{ asset('images/items/'.$img->image) }}" class="mt-1 extra_images" style="width:90%; margin: auto;">
+                                </div>
+                               @endforeach
+                           </div>
+                       </div>
+                       <div class="form-group">
+                        <label>Upload Extra Images</label>
+                            <label> Extra 5 Images </label>
+                            <input name="images[]" type="file" multiple class="form-control">
+                        </div>
                        </div>
                        <div class="col-md-6">
                        </div>

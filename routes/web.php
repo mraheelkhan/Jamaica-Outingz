@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth', 'user_role']], function(){
     Route::get('/tours/image/{id}/delete', [TourController::class, 'delete_image'])->name('tour_image.delete');
     Route::get('/restaurant/image/{id}/delete', [RestaurantController::class, 'delete_image'])->name('restaurant_image.delete');
     Route::get('/unique-experiences/image/{id}/delete', [UniqueExperienceController::class, 'delete_image'])->name('unique-experiences.delete');
+    Route::get('/items/image/{id}/delete', [ItemController::class, 'delete_image'])->name('item_image.delete');
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

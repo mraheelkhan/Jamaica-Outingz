@@ -27,6 +27,7 @@ class ItemResource extends JsonResource
             'fittings' => $this->fittings,
             'description' => $this->description,
             'image' => asset('images/items/' . $this->image),
+            'images_list' => $this->images,
         ];
     }
 }

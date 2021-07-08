@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\ItemImage;
 use Illuminate\Http\Request;
 use Image;
+use DB;
+use Redirect;
 
 class ItemController extends Controller
 {
@@ -37,54 +40,101 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => 'required',
-            'sku' => 'required',
-            'title' => 'required|min:2',
-            'price' => 'required|int',
-            'description' => 'nullable',
-            'sizes' => 'required',
-            'materials' => 'required',
-            'colors' => 'required',
-            'fittings' => 'required',
-        ]);
-
-        $image_name = 'default.jpg';
-        if ($request->hasFile('img')) {
-            $img = $request->img;
-            $this->validate($request, [
-                'img' => 'mimes:jpg,jpeg,png'
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'category_id' => 'required',
+                'sku' => 'required',
+                'title' => 'required|min:2',
+                'price' => 'required|int',
+                'description' => 'nullable',
+                'sizes' => 'required',
+                'materials' => 'required',
+                'colors' => 'required',
+                'fittings' => 'required',
             ]);
 
-            $image_resize = Image::make($img->getRealPath());
+            if ($request->hasFile('images')) {
+                $images = $request->images;
 
-            //Get Filename with Extension
-            $fileNameWithExt = $img->getClientOriginalName();
-            //Get Just File Name
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Get File Extension
-            $extension = $img->getClientOriginalExtension();
-            //FileName to Store
-            $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
-            //Upload Image
-            $image_resize->save(public_path('/images/items/' . $new));
-            
-            $image_name = $new;
+                $this->validate($request, [
+                    'images.*' => 'mimes:jpg,jpeg,png'
+                ]);
+            }
+
+            $image_name = 'default.jpg';
+            if ($request->hasFile('img')) {
+                $img = $request->img;
+                $this->validate($request, [
+                    'img' => 'mimes:jpg,jpeg,png'
+                ]);
+
+                $image_resize = Image::make($img->getRealPath());
+
+                //Get Filename with Extension
+                $fileNameWithExt = $img->getClientOriginalName();
+                //Get Just File Name
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Get File Extension
+                $extension = $img->getClientOriginalExtension();
+                //FileName to Store
+                $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                //Upload Image
+                $image_resize->save(public_path('/images/items/' . $new));
+                
+                $image_name = $new;
+            }
+
+            $item = Item::create([
+                'category_id' => $request->category_id,
+                'sku' => $request->sku,
+                'title' => $request->title,
+                'price' => $request->price,
+                'description' => $request->description,
+                'sizes' => $request->sizes,
+                'materials' => $request->materials,
+                'colors' => $request->colors,
+                'fittings' => $request->fittings,
+                'image' => $image_name,
+            ]);
+
+            if ($request->hasFile('images')) {
+                $images = $request->images;
+
+                foreach($images as $img) {
+                    $this->validate($request, [
+                        'img' => 'mimes:jpg,jpeg,png'
+                    ]);
+
+                    $image_resize = Image::make($img->getRealPath());
+
+                    //Get Filename with Extension
+                    $fileNameWithExt = $img->getClientOriginalName();
+                    //Get Just File Name
+                    $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                    //Get File Extension
+                    $extension = $img->getClientOriginalExtension();
+                    //FileName to Store
+                    $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                    //Upload Image
+                    $image_resize->save(public_path('/images/items/' . $new));
+                    
+                    $image_name = $new;
+                    ItemImage::create([
+                        'item_id' => $item->id,
+                        'image' => $new,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->back()->withSuccess('Item has successfully created.');
         }
+        catch(\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withDanger($e->getMessage());
 
-        Item::create([
-            'category_id' => $request->category_id,
-            'sku' => $request->sku,
-            'title' => $request->title,
-            'price' => $request->price,
-            'description' => $request->description,
-            'sizes' => $request->sizes,
-            'materials' => $request->materials,
-            'colors' => $request->colors,
-            'fittings' => $request->fittings,
-            'image' => $image_name,
-        ]);
-        return redirect()->back()->withSuccess('Item has successfully created.');
+        }
     }
 
     /**
@@ -125,6 +175,14 @@ class ItemController extends Controller
             'description' => 'nullable',
         ]);
 
+        if ($request->hasFile('images')) {
+            $images = $request->images;
+
+            $this->validate($request, [
+                'images.*' => 'mimes:jpg,jpeg,png'
+            ]);
+        }
+
         $image_name = $item->img;
         if ($request->hasFile('img')) {
             $img = $request->img;
@@ -160,6 +218,36 @@ class ItemController extends Controller
             'fittings' => $request->fittings,
             'image' => $image_name,
         ]);
+
+        if ($request->hasFile('images')) {
+            $images = $request->images;
+
+            foreach($images as $img) {
+                $this->validate($request, [
+                    'img' => 'mimes:jpg,jpeg,png'
+                ]);
+
+                $image_resize = Image::make($img->getRealPath());
+
+                //Get Filename with Extension
+                $fileNameWithExt = $img->getClientOriginalName();
+                //Get Just File Name
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Get File Extension
+                $extension = $img->getClientOriginalExtension();
+                //FileName to Store
+                $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+                //Upload Image
+                $image_resize->save(public_path('/images/items/' . $new));
+                
+                $image_name = $new;
+                ItemImage::create([
+                    'item_id' => $item->id,
+                    'image' => $new,
+                ]);
+            }
+        }
+        
         return redirect()->back()->withSuccess('Item has successfully updated.');
     }
 
@@ -173,5 +261,12 @@ class ItemController extends Controller
     {
         $item->delete();
         return redirect()->route('items.index')->withSuccess('Item has been deleted.');
+    }
+
+    public function delete_image($id) {
+        $image = ItemImage::findOrFail($id)->delete();
+        return redirect::back()->with('success', 'Image Deleted successfully!');
+        // File::delete(public_path("images/filename.png"));
+
     }
 }

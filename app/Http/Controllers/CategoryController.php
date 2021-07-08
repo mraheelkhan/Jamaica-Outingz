@@ -115,9 +115,33 @@ class CategoryController extends Controller
             'image' => 'nullable',
             'description' => 'nullable',
         ]);
+
+        $image_name = $category->image;
+        if ($request->hasFile('img')) {
+            $img = $request->img;
+            $this->validate($request, [
+                'img' => 'mimes:jpg,jpeg,png'
+            ]);
+
+            $image_resize = Image::make($img->getRealPath());
+
+            //Get Filename with Extension
+            $fileNameWithExt = $img->getClientOriginalName();
+            //Get Just File Name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get File Extension
+            $extension = $img->getClientOriginalExtension();
+            //FileName to Store
+            $new = str_replace(" ", "_", $filename) . '_' . time() . rand(1, 100) . '.' . $extension;
+            //Upload Image
+            $image_resize->save(public_path('/images/categories/' . $new));
+            
+            $image_name = $new;
+        }
+
         $category->update([
             'name' => $request->name,
-            'image' => 'https://www.funtoursjamaica.com/images/custom_img/slider/2.jpg',
+            'image' => $image_name,
             'description' => $request->description,
         ]);
         return redirect()->back()->withSuccess('Category has successfully updated.');

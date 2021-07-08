@@ -10,7 +10,7 @@
                 </h2>
             </div>
             <div class="card-body">
-               <form class="container" method="POST" action="{{ route('categories.update', $category->id) }}">
+               <form class="container" method="POST" action="{{ route('categories.update', $category->id) }}" enctype="multipart/form-data">
                 @csrf 
                 @method('PUT')
                 @if ($errors->any())
@@ -30,7 +30,7 @@
                            </div>
                            <div class="form-group">
                                <label> Category Image </label>
-                               <input type="file" name="image"  class="form-control"/>
+                               <input type="file" name="img"  class="form-control"/>
                            </div>
                            <div class="form-group">
                                <label> Category Description </label>

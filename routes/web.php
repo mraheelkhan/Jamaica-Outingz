@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'user_role']], function(){
     Route::resource('/items', ItemController::class);
     Route::resource('/locations', LocationController::class);
     Route::resource('/restaurant-types', RestaurantTypeController::class);
+    Route::resource('/pickups', PickupController::class);
     Route::get('/tours/image/{id}/delete', [TourController::class, 'delete_image'])->name('tour_image.delete');
     Route::get('/restaurant/image/{id}/delete', [RestaurantController::class, 'delete_image'])->name('restaurant_image.delete');
     Route::get('/unique-experiences/image/{id}/delete', [UniqueExperienceController::class, 'delete_image'])->name('unique-experiences.delete');

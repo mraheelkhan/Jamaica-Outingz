@@ -84,11 +84,9 @@ Route::get('/test', function(){
             // var_dump($signature);
             // exit;
             $CardDetails = array(
-                    'CardCVV2' => '',
+                    'CardCVV2' => '321',
                     'CardExpiryDate' => '0922',
                     'CardNumber' => '4666666666662222',
-                    'IssueNumber' => '',
-                    'StartDate' => ''
                 );
                 // Transaction Details.
                 $TransactionDetails = array(

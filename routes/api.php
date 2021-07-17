@@ -14,8 +14,10 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ItemController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\RestaurantController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\API\ContactController;
+use App\Http\Controllers\API\HelpController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\UniqueExperienceController;
 use App\Http\Controllers\API\RestaurantTypeController;
@@ -48,6 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::resource('/favourites', FavouriteController::class);
     Route::resource('/bookings', BookingController::class);
     Route::resource('/pickups', PickupController::class);
+    Route::post('/help', [HelpController::class,'help']);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
     Route::post('/contacts', [ContactController::class, 'contact']);
@@ -64,7 +67,7 @@ Route::prefix('public')->group(function () {
     Route::get('/profile', function (Request $request) {
         return response()->json(new ProfileResource($request->user()));
     });
-
+    
     Route::resource('/tours', TourController::class);
     Route::resource('/group-packages', GroupController::class);
     Route::resource('/reviews', ReviewController::class);
@@ -73,7 +76,9 @@ Route::prefix('public')->group(function () {
     Route::resource('/pickups', PickupController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
+    Route::post('/help', [HelpController::class,'help']);
     Route::post('/contacts', [ContactController::class, 'contact']);
+    //Route::paument('/payment', PaymentController::class,);
     Route::resource('/unique-experiences', UniqueExperienceController::class);
     Route::resource('/locations', LocationController::class);
     Route::resource('/restaurant-types', RestaurantTypeController::class);

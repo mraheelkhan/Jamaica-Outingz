@@ -93,7 +93,7 @@ class OrderController extends Controller
                 'hotel_room_no' => $request->input('hotel_room_no'),
             ]);
             
-            $order = json_encode(['order_id' => $order->id]);
+            $order = $order->id;
             
             DB::commit();
             return [

@@ -1,40 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TourController;
-use App\Http\Controllers\RestaurantController;
-use App\Http\Controllers\UniqueExperienceController;
-use App\Http\Controllers\MerchendiseController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\GuestController;
-use App\Http\Controllers\ScheduleBookingController;
-use App\Http\Controllers\PromoCodeController;
-use App\Http\Controllers\GuideController;
-use App\Http\Controllers\GroupPackageController;
-use App\Http\Controllers\PickupController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\RestaurantTypeController;
+namespace App\Core;
+use SoapClient;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', function () {
-    return redirect('login');
-});
-
-Route::get('/test', function(){
-    \App\Core\HelperFunction::payment();
-    dd(1);
+class HelperFunction
+{
+    public static function payment($amount, $card_cvv, $card_expiry_date, $card_number) {
         function msTimeStamp()
         {
             return (string)round(microtime(1) * 1000);
@@ -78,7 +49,7 @@ Route::get('/test', function(){
             $acquirerId = '464748';
             $orderNumber = 'FACPGTEST' . msTimeStamp();
             
-            $amount = '000000001200';
+            $amount = $amount;
             // 840 = USD, put your currency code here
             $currency = '840';
             $signature = Sign($password, $facId, $acquirerId, $orderNumber, $amount,
@@ -86,9 +57,9 @@ Route::get('/test', function(){
             // var_dump($signature);
             // exit;
             $CardDetails = array(
-                    'CardCVV2' => '321',
-                    'CardExpiryDate' => '0922',
-                    'CardNumber' => '4111111111111111',
+                    'CardCVV2' => $card_cvv,
+                    'CardExpiryDate' => $card_expiry_date,
+                    'CardNumber' => $card_number,
                 );
                 // Transaction Details.
                 $TransactionDetails = array(
@@ -114,10 +85,17 @@ Route::get('/test', function(){
                 // exit;   
                 // Call the Authorize through the Client
                 $result = $client->Authorize($AuthorizeRequest);
-                // echo "<pre>";
+                if($result->AuthorizeResult->CreditCardTransactionResults->ReasonCodeDescription == 'Transaction is approved.') {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+                echo "<pre>";
+                dd($result->AuthorizeResult->CreditCardTransactionResults->ReasonCodeDescription);
                 // var_dump($result);
                 // var_dump($client);
-                // exit;
+                exit;
                 if ($client->fault) {
                     echo '<h2>Fault</h2><pre>';
                     print_r($result);
@@ -135,32 +113,6 @@ Route::get('/test', function(){
                     echo '</pre>';
                     }
                 }
-    });
+    }
+}
 
-Route::group(['middleware' => ['auth', 'user_role']], function(){
-    Route::resource('/tours', TourController::class);
-    Route::resource('/restaurants', RestaurantController::class);
-    Route::resource('/unique-experiences', UniqueExperienceController::class);
-    Route::resource('/bookings', BookingController::class);
-    Route::resource('/merchendises', MerchendiseController::class);
-    Route::resource('/registered-guests', GuestController::class);
-    Route::resource('/tour-guides', GuideController::class);
-    Route::resource('/scheduled-bookings', ScheduleBookingController::class);
-    Route::resource('/promo-codes', PromoCodeController::class);
-    Route::resource('/group-packages', GroupPackageController::class);
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/items', ItemController::class);
-    Route::resource('/locations', LocationController::class);
-    Route::resource('/restaurant-types', RestaurantTypeController::class);
-    Route::resource('/pickups', PickupController::class);
-    Route::get('/tours/image/{id}/delete', [TourController::class, 'delete_image'])->name('tour_image.delete');
-    Route::get('/restaurant/image/{id}/delete', [RestaurantController::class, 'delete_image'])->name('restaurant_image.delete');
-    Route::get('/unique-experiences/image/{id}/delete', [UniqueExperienceController::class, 'delete_image'])->name('unique-experiences.delete');
-    Route::get('/items/image/{id}/delete', [ItemController::class, 'delete_image'])->name('item_image.delete');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-require __DIR__.'/auth.php';

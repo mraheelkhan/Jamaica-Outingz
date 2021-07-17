@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/contacts', [ContactController::class, 'contact']);
     
     Route::resource('/orders', OrderController::class);
+    Route::post('/order-payment', [OrderController::class, 'order_payment']);
 });
 
 Route::prefix('public')->group(function () {

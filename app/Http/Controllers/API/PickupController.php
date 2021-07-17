@@ -41,7 +41,7 @@ class PickupController extends Controller
         $pickup = Pickup::create($validated);
         return [
             'success' => 1,
-            'pickup' => $pickup
+            'pickup' => $pickup->id,
         ];
     }
 

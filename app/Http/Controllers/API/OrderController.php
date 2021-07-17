@@ -19,7 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        // $pickups = Order::where('user_id', auth()->user()->id)->get();
+        // return OrderResource::collection($pickups);
     }
 
     /**

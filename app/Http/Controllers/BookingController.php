@@ -59,7 +59,6 @@ class BookingController extends Controller
             return redirect::back()->with('success', 'Booking created successfully!');
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect::back()->with('danger', 'Something went wrong!');
         }
     }

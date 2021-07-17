@@ -61,7 +61,7 @@ class BookingController extends Controller
         $booking = Booking::create($validated);
         return [
             'success' => 1,
-            'booking' => $booking
+            'booking' => $booking->id,
         ];
     }
 

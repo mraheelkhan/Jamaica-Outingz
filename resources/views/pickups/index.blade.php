@@ -46,7 +46,7 @@
                                 <td>{{ $pickup->pickup_time }}</td>
                                 <td>{{ $pickup->adults }}</td>
                                 <td>{{ $pickup->childrens }}</td>
-                                <td>{{ $pickup->user->name }}</td>
+                                <td>@if(!is_null($pickup->user)){{ $pickup->user->name }}@endif</td>
                                 
                                 <td>
                                     <form method="POST" action="{{ route('pickups.destroy', $pickup->id ) }}">

@@ -14,7 +14,7 @@ class PickupController extends Controller
      */
     public function index()
     {
-        $pickups = Pickup::orderBy('id', 'desc')->get();
+        $pickups = Pickup::with('user')->orderBy('id', 'desc')->get();
 
         return view('pickups.index', compact('pickups'));
     }

@@ -92,7 +92,7 @@ class OrderController extends Controller
                 'hotel_room_no' => $request->input('hotel_room_no'),
             ]);
             
-            $order = json_encode(['order_id' => $order->id, 'user_id' => $user_id, 'status' => 0, 'payment_status' => 'pending', 'item' => ['item_id' => $request->input('item_id'), 'category_id' => $request->input('category_id'), 'size' => $request->input('size'), 'condition' => $request->input('condition'), 'material' => $request->input('material'), 'color' => $request->input('color'), 'fitting' => $request->input('fitting'), 'quantity' => $request->input('quantity')], 'shipping' => ['name' => $request->input('name'), 'email' => $request->input('email'), 'address' => $request->input('address'), 'country' => $request->input('country'), 'zip_postal_code' => $request->input('zip_postal_code'), 'hotel_room_no' => $request->input('hotel_room_no'),]]);
+            $order = json_encode(['order_id' => $order->id]);
             
             DB::commit();
             return [

@@ -103,7 +103,7 @@ class BookingController extends Controller
             'email' => 'required',
             'contact' => 'required',
             'hotel_name' => 'required',
-            'hotel_address' => 'required',
+            'hotel_address' => 'nullable',
             'hotel_room' => 'required',
             'booking_date' => 'required',
             'adults' => 'required',
